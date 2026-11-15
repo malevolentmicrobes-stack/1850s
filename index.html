@@ -1,0 +1,660 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<title>Back to the 1850s</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Sans+Condensed:wght@600;700&display=swap">
+<style>
+/* Layout: sticky tab bar over a single centered stage; each model is a hash-routed view with its figure, legend and sources. */
+:root{
+  --bg:#F5F7F6;--surface:#FFFFFF;--surface2:#F9FAF8;--fg:#1B2A4A;--muted:#5A6478;--faint:#8A93A3;--line:#D6DCE2;--grid:#E3E7EA;
+  --accent:#2A9D8F;--accent-ink:#FFFFFF;
+  --good:#1D9E75;--warn:#E08E0B;--bad:#D62828;--ok:#1B2A4A;
+  --t-spore:#A32D2D;--t-myco:#993556;--t-nonenv:#993C1D;--t-fungi:#854F0B;--t-veg:#0F6E56;--t-env:#185FA5;
+  --b-spore:#FCEBEB;--b-myco:#FBEAF0;--b-nonenv:#FAECE7;--b-fungi:#FAEEDA;--b-veg:#E1F5EE;--b-env:#E6F1FB;
+  --s-spore:#E24B4A;--s-myco:#D4537E;--s-nonenv:#D85A30;--s-fungi:#BA7517;--s-veg:#1D9E75;--s-env:#378ADD;
+  --r-contact:#1D9E75;--r-enteric:#D85A30;--r-droplet:#7F77DD;--r-air:#378ADD;--r-blood:#D4537E;--r-water:#1F6F8B;
+  --font-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --font-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0D1524;--surface:#142035;--surface2:#18263E;--fg:#E7EDF6;--muted:#A3AFC2;--faint:#7C889C;--line:#2C3B57;--grid:#22304A;
+  --accent:#4FC1B3;--accent-ink:#0D1524;--good:#4CC79E;--warn:#F2B13C;--bad:#F07070;--ok:#9DB7E0;
+  --t-spore:#F09595;--t-myco:#ED93B1;--t-nonenv:#F0997B;--t-fungi:#FAC775;--t-veg:#5DCAA5;--t-env:#85B7EB;
+  --b-spore:#4A1616;--b-myco:#46172A;--b-nonenv:#47200F;--b-fungi:#3E2806;--b-veg:#0A3A30;--b-env:#0E2F52;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0D1524;--surface:#142035;--surface2:#18263E;--fg:#E7EDF6;--muted:#A3AFC2;--faint:#7C889C;--line:#2C3B57;--grid:#22304A;
+  --accent:#4FC1B3;--accent-ink:#0D1524;--good:#4CC79E;--warn:#F2B13C;--bad:#F07070;--ok:#9DB7E0;
+  --t-spore:#F09595;--t-myco:#ED93B1;--t-nonenv:#F0997B;--t-fungi:#FAC775;--t-veg:#5DCAA5;--t-env:#85B7EB;
+  --b-spore:#4A1616;--b-myco:#46172A;--b-nonenv:#47200F;--b-fungi:#3E2806;--b-veg:#0A3A30;--b-env:#0E2F52;
+  color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:15px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+*{box-sizing:border-box}
+h1,h2,h3{font-family:var(--font-display);text-wrap:balance;margin:0;letter-spacing:-0.01em}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px;max-width:1320px;margin:0 auto}
+.brand{font-family:var(--font-display);font-weight:700;font-size:17px;white-space:nowrap;text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand i{width:10px;height:10px;border-radius:50%;background:var(--bad);display:inline-block;box-shadow:14px 0 0 var(--warn),28px 0 0 var(--accent);margin-right:30px}
+.tabs{display:flex;gap:2px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:thin}
+.tabs a{padding:7px 11px;border-radius:7px;text-decoration:none;font-size:13.5px;color:var(--muted);white-space:nowrap;font-weight:500}
+.tabs a:hover{background:var(--surface2);color:var(--fg)}
+.tabs a[aria-current="page"]{background:var(--fg);color:var(--bg)}
+.tabs .sep{width:1px;background:var(--line);margin:6px 4px;flex:none}
+.theme{flex:none;border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:6px}
+.theme span{display:inline-block;width:12px;height:12px;border-radius:50%;background:linear-gradient(90deg,var(--fg) 50%,var(--bg) 50%);border:1px solid var(--fg)}
+main{max-width:1320px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px}
+.view-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px 24px;margin-bottom:18px}
+.view-head h2{font-size:30px;line-height:1.1}
+.q{color:var(--muted);max-width:68ch;margin:6px 0 0}
+.eyebrow{font-family:var(--font-mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--faint)}
+.chip{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.final{border-color:var(--accent);color:var(--accent)}
+.chip.inter{border-color:var(--warn);color:var(--warn)}
+.chip.old{border-style:dashed}
+.layout.full{grid-template-columns:minmax(0,1fr)}.layout.full .side{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start}
+@media (max-width:980px){.layout{grid-template-columns:minmax(0,1fr)}}
+.fig{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;min-width:0}
+.fig svg{display:block;width:100%;height:auto;min-width:640px}
+.fig.narrow svg{min-width:0}
+.side{display:flex;flex-direction:column;gap:16px;min-width:0}
+.side h3{font-size:15px;margin-bottom:6px}
+.side p,.side li{color:var(--muted);font-size:14px;margin:0}
+.side ul{padding-left:18px;margin:0;display:flex;flex-direction:column;gap:4px}
+.key{display:flex;flex-direction:column;gap:7px;font-size:14px;color:var(--muted)}
+.key div{display:flex;align-items:center;gap:10px}
+.sw{width:30px;height:10px;border-radius:2px;flex:none}
+.ln{width:30px;height:0;border-top:3px dashed;flex:none}
+.ln.solid{border-top-style:solid}
+.dot{width:14px;height:14px;border-radius:50%;flex:none;border:1.5px solid}
+.sources{font-size:12.5px;color:var(--faint);margin-top:14px;max-width:110ch}
+.note{border-left:3px solid var(--warn);padding:6px 0 6px 12px;font-size:13.5px;color:var(--muted)}
+.ctrls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.pill{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13.5px;cursor:pointer}
+.pill[aria-pressed="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.lab{font-size:12.5px;color:var(--faint);font-family:var(--font-mono);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.cards2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:12px}
+@media (max-width:640px){.cards2{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:12px 14px;font-size:14px}
+/* svg text */
+svg text{font-family:var(--font-body)}
+.tx{fill:var(--fg)}.tm{fill:var(--muted)}.tf{fill:var(--faint)}
+.mono{font-family:var(--font-mono)!important;letter-spacing:.08em}
+.it{font-style:italic}
+.hl .dimmable{transition:opacity .15s}
+.hl.focus .dimmable:not(.on){opacity:.12}
+.node{cursor:pointer}
+/* home */
+.hero{padding-block:28px 26px;border-bottom:1px solid var(--line);margin-bottom:26px;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:28px;align-items:end}
+@media (max-width:820px){.hero{grid-template-columns:minmax(0,1fr)}}
+.hero h1{font-size:clamp(40px,7vw,76px);line-height:.95}
+.hero h1 em{font-style:normal;color:var(--bad)}
+.hero p{color:var(--muted);font-size:17px;max-width:56ch;margin:14px 0 0}
+.ledger{font-family:var(--font-mono);font-size:13px;color:var(--muted);display:grid;grid-template-columns:auto 1fr;gap:6px 14px;border:1px solid var(--line);border-radius:10px;padding:14px 16px;background:var(--surface)}
+.ledger b{color:var(--fg);font-weight:500}
+.group{margin-top:26px}
+.group h2{font-size:20px;margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{display:flex;flex-direction:column;gap:8px;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.card:hover{border-color:var(--fg)}
+.card h3{font-size:18px}
+.card p{margin:0;color:var(--muted);font-size:14px}
+.card .row{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.wash{margin-top:34px;background:var(--fg);color:var(--bg);border-radius:12px;padding:22px 24px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;align-items:center}
+.wash h2{font-size:clamp(28px,5vw,44px)}
+.wash p{margin:0;max-width:52ch;opacity:.85}
+.range{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted)}
+.range input{width:200px}
+.quantum{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px;align-items:start;margin-top:22px}
+@media (max-width:980px){.quantum{grid-template-columns:minmax(0,1fr)}}
+.quantum h2{font-size:34px;margin-top:4px}
+.quantum .fig svg{min-width:760px}
+.qdl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:8px 0 14px;font-size:14px}.qdl dt{font-weight:600}.qdl dd{margin:0;color:var(--muted)}
+.q-intro .key{margin-bottom:10px}
+.pill:disabled{opacity:.55;cursor:default}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("atlas-theme2")||"dark"}catch(e){document.documentElement.dataset.theme="dark"}</script>
+
+<header class="bar"><div class="bar-in">
+  <a class="brand" href="#home"><i aria-hidden="true"></i>1850s</a>
+  <nav class="tabs" id="tabs" aria-label="Models"></nav>
+  <button class="theme" id="theme" type="button" aria-label="Switch light or dark"><span aria-hidden="true"></span><b id="themeLab">Dark</b></button>
+</div></header>
+<main id="main"></main>
+
+<script>
+/* ---------- data ---------- */
+const LM=Math.log10(26280);
+const L=h=>Math.log10(Math.max(h,1));
+const f=n=>(+n).toFixed(1);
+const P=(cx,cy,r,a)=>{const t=(a-90)*Math.PI/180;return[cx+r*Math.cos(t),cy+r*Math.sin(t)]};
+const arc=(cx,cy,r,a1,a2)=>{const[x1,y1]=P(cx,cy,r,a1),[x2,y2]=P(cx,cy,r,a2);return`M${f(x1)} ${f(y1)} A${r} ${r} 0 ${a2-a1>180?1:0} 1 ${f(x2)} ${f(y2)}`};
+const sect=(cx,cy,r1,r2,a1,a2)=>{const[x1,y1]=P(cx,cy,r1,a1),[x2,y2]=P(cx,cy,r2,a1),[x3,y3]=P(cx,cy,r2,a2),[x4,y4]=P(cx,cy,r1,a2);const lg=a2-a1>180?1:0;return`M${f(x1)} ${f(y1)} L${f(x2)} ${f(y2)} A${r2} ${r2} 0 ${lg} 1 ${f(x3)} ${f(y3)} L${f(x4)} ${f(y4)} A${r1} ${r1} 0 ${lg} 0 ${f(x1)} ${f(y1)} Z`};
+const head=(x,y,dx,dy,c,s=7)=>{const l=Math.hypot(dx,dy)||1,ux=dx/l,uy=dy/l;return`<polygon points="${f(x+ux*s)},${f(y+uy*s)} ${f(x-uy*s*.7)},${f(y+ux*s*.7)} ${f(x+uy*s*.7)},${f(y-ux*s*.7)}" fill="${c}"/>`};
+const TIERNAME={1:'Enveloped',2:'Vegetative',3:'Fungi',4:'Non-env.',5:'Mycobact.',6:'Spores'};
+const TCOL=t=>`var(--s-${t})`,TSTROKE=t=>`var(--t-${t})`,TBG=t=>`var(--b-${t})`;
+const italic=n=>/^C\. /.test(n);
+const tickH=[[1,'1 h'],[24,'1 d'],[168,'1 wk'],[720,'1 mo'],[8760,'1 yr']];
+const FEARC={red:'var(--bad)',amber:'var(--warn)',ok:'var(--ok)'};
+
+/* master table: name,type,tier,route,lo,hi,kind,fear,space */
+const ORG=[
+ ['C. diff','spore',6,'enteric',3600,null,'single','red',1],
+ ['TB','myco',5,'air',null,null,'none','red',3],
+ ['Adenovirus','nonenv',4,'droplet',168,2160,'r','amber',2],
+ ['HAV','nonenv',4,'enteric',2,1440,'r','amber',1],
+ ['Norovirus','nonenv',4,'enteric',8,168,'r','amber',1],
+ ['C. auris','fungi',3,'contact',336,null,'lb','red',1],
+ ['Kleb (CPE)','veg',2,'contact',2,21900,'open','ok',1],
+ ['Pseudomonas','veg',2,'contact',6,11680,'r','ok',1],
+ ['MRSA','veg',2,'contact',168,5040,'r','ok',1],
+ ['Acinetobacter','veg',2,'contact',72,3600,'r','ok',1],
+ ['VRE','veg',2,'contact',120,2880,'r','ok',1],
+ ['Legionella','veg',2,'water',4992,null,'lb','red',4],
+ ['Mpox','env',1,'contact',264,720,'mp','amber',1],
+ ['HBV','env',1,'blood',168,null,'lb','ok',1],
+ ['Influenza','env',1,'droplet',24,48,'r','ok',2],
+ ['Measles','env',1,'air',1,2,'air','red',3]
+].map(a=>({n:a[0],t:a[1],tier:a[2],route:a[3],lo:a[4],hi:a[5],k:a[6],fear:a[7],sp:a[8]}));
+const RANGE={'C. diff':'5 mo (single)','TB':'air route','Adenovirus':'7 d–3 mo','HAV':'2 h–60 d','Norovirus':'8 h–7 d','C. auris':'≥14 d','Kleb (CPE)':'2 h–>30 mo','Pseudomonas':'6 h–16 mo','MRSA':'7 d–7 mo','Acinetobacter':'3 d–5 mo','VRE':'5 d–4 mo','Legionella':'≥208 d (lab water)','Mpox':'11 d (22 °C)–30 d (4 °C)','HBV':'>1 wk','Influenza':'1–2 d','Measles':'2 h, room air'};
+
+/* ---------- generic hub orbit (Obsidian style) ---------- */
+function hubOrbit(o){
+  const CX=640,CY=455,W=1280,H=910;let s=`<svg viewBox="0 0 ${W} ${H}" class="hl" role="img" aria-label="${o.aria}">`;
+  o.rings.forEach(([r,lab])=>{s+=`<circle cx="${CX}" cy="${CY}" r="${r}" fill="none" stroke="var(--line)" stroke-width="1.3" stroke-dasharray="3 6"/>`;
+    const y=o.ringLabel==='bottom'?CY+r+18:CY-r-8;s+=`<text class="tf mono" x="${CX}" y="${y}" text-anchor="middle" font-size="13">${lab}</text>`});
+  const pos={};o.nodes.forEach(n=>{pos[n[0]]=P(CX,CY,n[2],n[3])});
+  const EC={G:'var(--good)',A:'var(--warn)',R:'var(--bad)'};
+  o.edges.forEach(([h,n,st])=>{const[hx,hy]=o.hubs[h];const[nx,ny]=pos[n];const dx=nx-hx,dy=ny-hy,l=Math.hypot(dx,dy);
+    const qx=(hx+nx)/2-dy/l*28,qy=(hy+ny)/2+dx/l*28;const g=st==='G';
+    s+=`<path class="dimmable" data-h="${h}" data-n="${n}" d="M${hx} ${hy} Q${f(qx)} ${f(qy)} ${f(nx)} ${f(ny)}" fill="none" stroke="${EC[st]}" stroke-width="${g?1.8:2.4}" ${g?'':'stroke-dasharray="7 5"'} opacity="${g&&o.fadeGreen?.5:.9}"/>`});
+  o.nodes.forEach(([name,t,r,a,air,size])=>{const[x,y]=pos[name];const rr=size||17;
+    s+=`<g class="node dimmable" data-n="${name}" tabindex="0"><circle cx="${f(x)}" cy="${f(y)}" r="${f(rr)}" fill="${air?'var(--surface)':TBG(t)}" stroke="${TSTROKE(t)}" stroke-width="${air?2:1.5}" ${air?'stroke-dasharray="3 3"':''}/>`;
+    const cls='tx'+(italic(name)?' it':'');
+    if(r===0)s+=`<text class="${cls}" x="${f(x)}" y="${f(y+rr+24)}" text-anchor="middle" font-size="19">${name}</text>`;
+    else{const sx=Math.sin(a*Math.PI/180);const st=sx>-0.15;s+=`<text class="${cls}" x="${f(x+(rr+8)*(st?1:-1))}" y="${f(y+6)}" text-anchor="${st?'start':'end'}" font-size="19">${name}${air&&o.airTag?' (air)':''}</text>`}
+    s+=`</g>`});
+  Object.entries(o.hubs).forEach(([h,[x,y,sub]])=>{s+=`<g class="node dimmable" data-h="${h}" tabindex="0"><rect x="${x-118}" y="${y-34}" width="236" height="68" rx="12" fill="var(--surface2)" stroke="var(--line)" stroke-width="1.3"/><text class="tx" x="${x}" y="${y-4}" text-anchor="middle" font-size="18" font-weight="700">${h}</text><text class="tm" x="${x}" y="${y+20}" text-anchor="middle" font-size="14">${sub}</text></g>`});
+  return s+'</svg>';
+}
+function wireHover(root){const svg=root.querySelector('svg.hl');if(!svg)return;
+  const set=(el)=>{const n=el.dataset.n,h=el.dataset.h;svg.classList.add('focus');
+    svg.querySelectorAll('.dimmable').forEach(d=>{const on=(n&&(d.dataset.n===n))||(h&&(d.dataset.h===h))||
+      (n&&d.dataset.h&&!d.dataset.n&&[...svg.querySelectorAll(`path[data-n="${CSS.escape(n)}"]`)].some(p=>p.dataset.h===d.dataset.h))||
+      (h&&d.dataset.n&&!d.dataset.h&&[...svg.querySelectorAll(`path[data-h="${CSS.escape(h)}"]`)].some(p=>p.dataset.n===d.dataset.n));
+      d.classList.toggle('on',!!on)})};
+  const clr=()=>{svg.classList.remove('focus');svg.querySelectorAll('.on').forEach(d=>d.classList.remove('on'))};
+  svg.querySelectorAll('.node').forEach(g=>{g.addEventListener('mouseenter',()=>set(g));g.addEventListener('focus',()=>set(g));g.addEventListener('mouseleave',clr);g.addEventListener('blur',clr)});
+}
+const HUBXY=[[150,95],[1130,95],[150,815],[1130,815]];
+
+/* ---------- views ---------- */
+const V={};
+const shell=(o)=>`<div class="view-head"><div><div class="eyebrow">${o.eyebrow}</div><h2>${o.title}</h2><p class="q">${o.q}</p></div><span class="chip ${o.chipc||''}">${o.chip}</span></div>
+<div class="layout${o.full?' full':''}"><div style="min-width:0"><div class="fig ${o.narrow?'narrow':''}">${o.fig}</div>${o.below||''}<p class="sources">${o.src}</p></div><aside class="side">${o.side}</aside></div>`;
+const keyLines=(rows)=>`<div class="key">${rows.map(([c,t,solid])=>`<div><span class="ln ${solid?'solid':''}" style="border-color:${c}"></span>${t}</div>`).join('')}</div>`;
+const keyTypes=()=>`<div class="key">${[['spore','Spores'],['myco','Mycobacteria'],['nonenv','Non-enveloped virus'],['fungi','Fungi'],['veg','Vegetative bacteria'],['env','Enveloped virus']].map(([t,l])=>`<div><span class="dot" style="background:${TBG(t)};border-color:${TSTROKE(t)}"></span>${l}</div>`).join('')}</div>`;
+
+/* Orbit */
+V.orbit=()=>{
+  const TR={spore:0,myco:78,nonenv:140,fungi:200,veg:262,env:330};
+  const N=[['C. diff','spore',0,3600],['TB','myco',225,2,1],['Adenovirus','nonenv',38,2160],['HAV','nonenv',95,1440],['Norovirus','nonenv',330,168],['C. auris','fungi',22,336],['Acinetobacter','veg',318,3600],['MRSA','veg',285,5040],['VRE','veg',250,2880],['Pseudomonas','veg',205,11680],['Kleb (CPE)','veg',165,21900],['Legionella','veg',125,4992],['Mpox','env',62,264],['HBV','env',145,168],['Influenza','env',188,48],['Measles','env',232,2,1]]
+   .map(([n,t,a,h,air])=>[n,t,TR[t],a,!!air,air?11:9.5*Math.sqrt(L(h)+1)]);
+  const hubs={'Alcohol hand rub':[...HUBXY[0],'Hand hygiene'],'Routine wipe (quat)':[...HUBXY[1],'Surface'],'Surgical mask':[...HUBXY[2],'Respiratory'],'Room cleaning':[...HUBXY[3],'Plumbing']};
+  const E=[['Alcohol hand rub','C. diff','R'],['Alcohol hand rub','Norovirus','A'],['Routine wipe (quat)','C. diff','R'],['Routine wipe (quat)','C. auris','R'],['Routine wipe (quat)','Norovirus','A'],['Routine wipe (quat)','Adenovirus','A'],['Routine wipe (quat)','HAV','A'],['Routine wipe (quat)','Mpox','A'],['Surgical mask','Measles','R'],['Surgical mask','TB','R'],['Room cleaning','Legionella','R']];
+  return shell({eyebrow:'Model · Obsidian orbit',title:'Where routine practice misses',q:'Rings follow how hard each organism is to kill. Lines connect the everyday tool to the organism it misses. Hover a node or hub to isolate its links.',chip:'Final',chipc:'final',
+   fig:hubOrbit({aria:'Orbit map of routine barriers and the pathogens they miss',rings:[[78,'MYCOBACTERIA'],[140,'NON-ENVELOPED'],[200,'FUNGI'],[262,'VEGETATIVE'],[330,'ENVELOPED']],nodes:N,hubs,edges:E,airTag:true}),
+   side:`<div><h3>Orbit</h3><p>Center is hardest to kill (CDC resistance order). Node area is the longest reported surface survival on a log scale. Dashed node: airborne route.</p></div>
+   <div><h3>Lines</h3>${keyLines([['var(--bad)','Barrier fails'],['var(--warn)','Needs the right label claim']])}</div>
+   <div>${keyTypes()}</div>
+   <div><h3>No line</h3><p>MRSA, VRE, Acinetobacter, Pseudomonas, Klebsiella, HBV and influenza: the routine tools work. When these spread, a step was skipped.</p></div>`,
+   src:'Sources: CDC Guideline for Disinfection and Sterilization 2008, Fig. 1; CDC Isolation Precautions Appendix A; Kramer 2006; Welsh 2017; Meister 2023; Mendis 2015; Lo 2026; Kociolek 2023; Lionakis 2024; Hall 2011.'})};
+
+/* PPE */
+V.ppe=()=>{
+  const nodes=[['C. diff','spore',120,250],['Norovirus','nonenv',120,290],['C. auris','fungi',120,325],['MDR bacteria','veg',120,215],['Mpox','env',120,355],['HAV','nonenv',120,160],['Influenza','env',215,55],['Adenovirus','nonenv',215,10],['Measles','env',300,140,1],['TB','myco',300,105,1],['HBV','env',375,215],['Legionella','veg',375,245]].map(a=>[a[0],a[1],a[2],a[3],!!a[4]]);
+  const hubs={'Gloves + gown':[...HUBXY[0],'Contact precautions'],'Surgical mask':[...HUBXY[1],'Droplet precautions'],'Standard precautions':[...HUBXY[2],'Every patient'],'N95 + AIIR':[...HUBXY[3],'Airborne precautions']};
+  const E=[['Gloves + gown','C. diff','G'],['Gloves + gown','Norovirus','G'],['Gloves + gown','C. auris','G'],['Gloves + gown','MDR bacteria','G'],['Gloves + gown','Mpox','G'],['Gloves + gown','Adenovirus','G'],['Gloves + gown','HAV','A'],['Surgical mask','Influenza','G'],['Surgical mask','Adenovirus','G'],['Surgical mask','Measles','R'],['Surgical mask','TB','R'],['N95 + AIIR','Measles','G'],['N95 + AIIR','TB','G'],['N95 + AIIR','Mpox','A'],['Standard precautions','HBV','G'],['Standard precautions','Legionella','G'],['Standard precautions','HAV','G']];
+  return shell({eyebrow:'Flipped view · the wearer',title:'What your PPE protects you from',q:'Rings show how far each organism travels from the patient. Lines connect each piece of PPE to the organisms it covers.',chip:'Final',chipc:'final',
+   fig:hubOrbit({aria:'PPE orbit',rings:[[120,'CONTACT'],[215,'DROPLET'],[300,'AIRBORNE'],[375,'STANDARD ONLY']],ringLabel:'bottom',nodes,hubs,edges:E,fadeGreen:true}),
+   side:`<div><h3>Lines</h3>${keyLines([['var(--good)','Protects you',1],['var(--warn)','Conditional'],['var(--bad)','Does not protect']])}</div>
+   <div><h3>Read it</h3><ul><li>A surgical mask does not protect against measles or TB.</li><li>Gloves do not replace soap and water after C. diff.</li><li>HAV needs contact precautions only if the patient is diapered or incontinent.</li></ul></div>
+   <div class="note">Mpox → N95 is drawn as conditional until current CDC mpox PPE guidance is confirmed.</div>
+   <div><p>MDR bacteria: MRSA, VRE, Acinetobacter, Pseudomonas, CRE. Dashed node: airborne.</p></div>`,
+   src:'Sources: CDC Isolation Precautions Appendix A (2026); CDC Isolation Guideline 2007; Kociolek 2023; Lo 2026.'})};
+
+/* Agents */
+V.agents=()=>{
+  const nodes=[['C. diff','spore',0,0],['Norovirus','nonenv',95,20],['Adenovirus','nonenv',95,110],['HAV','nonenv',95,225],['C. auris','fungi',175,80],['MDR bacteria','veg',255,300],['Mpox','env',335,240],['HBV','env',335,335],['Influenza','env',335,30]].map(a=>[a[0],a[1],a[2],a[3],false]);
+  const hubs={'Alcohol':[...HUBXY[0],'Hand rub · 70% ethanol'],'Quats':[...HUBXY[1],'Quaternary ammonium'],'Hydrogen peroxide':[...HUBXY[2],'H2O2-based products'],'Bleach':[...HUBXY[3],'Chlorine · sporicidal at 1:10']};
+  const E=[['Alcohol','MDR bacteria','G'],['Alcohol','C. auris','G'],['Alcohol','Influenza','G'],['Alcohol','Mpox','G'],['Alcohol','HBV','G'],['Alcohol','C. diff','R'],['Alcohol','Norovirus','A'],['Alcohol','HAV','R'],['Alcohol','Adenovirus','A'],['Quats','MDR bacteria','G'],['Quats','Influenza','G'],['Quats','C. diff','R'],['Quats','C. auris','R'],['Quats','Norovirus','A'],['Quats','Adenovirus','R'],['Quats','Mpox','A'],['Bleach','C. diff','G'],['Bleach','Norovirus','G'],['Bleach','C. auris','G'],['Bleach','Adenovirus','G'],['Bleach','HAV','G'],['Bleach','MDR bacteria','G'],['Bleach','Mpox','G'],['Hydrogen peroxide','MDR bacteria','G'],['Hydrogen peroxide','C. auris','A'],['Hydrogen peroxide','Mpox','R'],['Hydrogen peroxide','Norovirus','A']];
+  return shell({eyebrow:'Flipped view · the surface',title:'What each agent kills',q:'Rings follow the CDC resistance order, toughest at the center. Lines connect each agent to the organisms it kills or misses.',chip:'Final',chipc:'final',
+   fig:hubOrbit({aria:'Disinfectant agent orbit',rings:[[95,'NON-ENVELOPED'],[175,'FUNGI'],[255,'VEGETATIVE'],[335,'ENVELOPED']],ringLabel:'bottom',nodes,hubs,edges:E,fadeGreen:true}),
+   side:`<div><h3>Lines</h3>${keyLines([['var(--good)','Kills it',1],['var(--warn)','Depends on the product label'],['var(--bad)','Fails']])}</div>
+   <div><h3>Read it</h3><ul><li>Only bleach reaches every node.</li><li>Quats and alcohol fail toward the center: spores, C. auris, non-enveloped viruses.</li><li>Match the EPA label claim (List G, K, P) to the pathogen and follow its contact time.</li></ul></div>
+   <div class="note">Alcohol on adenovirus and HAV, and quats on adenovirus, come from the lecture source document; confirm against primary papers.</div>
+   <div><p>Airborne organisms are left off: their risk is air, not surfaces.</p></div>`,
+   src:'Sources: CDC Appendix A; EPA Lists G, K, P; Kociolek 2023; Lionakis 2024; Meister 2023; Junk 2017; Widmer 2011.'})};
+
+/* Three views */
+V.views=()=>{
+  const XM=LM+0.15,x0=150,xw=560,X=h=>x0+xw*L(h)/XM,RW=x0+xw+130,ST=19,PAD=12;
+  let s='';
+  // TOP VIEW: time x space, every organism on its own line
+  const SPN={4:'Water',3:'Airborne',2:'Droplet',1:'Contact'};let y=52,bandsTop={};
+  s+=`<text class="tf mono" x="${x0}" y="34" font-size="12">TOP VIEW · TIME × SPACE</text>`;
+  [4,3,2,1].forEach(sp=>{const arr=ORG.filter(o=>o.sp===sp);const h=arr.length*ST+PAD;bandsTop[sp]=[y,h];
+    s+=`<rect x="${x0}" y="${y}" width="${RW-x0}" height="${h}" fill="var(--surface2)"/><text class="tm" x="${x0-12}" y="${y+h/2+4}" text-anchor="end" font-size="13">${SPN[sp]}</text>`;
+    arr.forEach((o,i)=>{s+=bar3(o,y+PAD/2+(i+.5)*ST,5,X,true,11.5)});y+=h+4});
+  const topEnd=y;
+  tickH.forEach(([h,l])=>{s+=`<line x1="${f(X(h))}" y1="52" x2="${f(X(h))}" y2="${topEnd}" stroke="var(--grid)" stroke-dasharray="2 4"/><text class="tf" x="${f(X(h))}" y="${topEnd+14}" text-anchor="middle" font-size="11">${l}</text>`});
+  // FRONT VIEW: time x tier
+  const F0=topEnd+62;y=F0;const fy={};
+  s+=`<text class="tf mono" x="${x0}" y="${F0-14}" font-size="12">FRONT VIEW · TIME × DISINFECTANT</text>`;
+  [6,5,4,3,2,1].forEach(t=>{const arr=ORG.filter(o=>o.tier===t);const h=arr.length*ST+PAD;fy[t]=[y,h];
+    s+=`<rect x="${x0}" y="${y}" width="${RW-x0}" height="${h}" fill="var(--surface2)"/><text class="tm" x="${x0-12}" y="${y+h/2+4}" text-anchor="end" font-size="13">${TIERNAME[t]}</text>`;
+    arr.forEach((o,i)=>{s+=bar3(o,y+PAD/2+(i+.5)*ST,6,X,true,12.5)});y+=h+4});
+  const bot=y;
+  tickH.forEach(([h,l])=>{s+=`<line x1="${f(X(h))}" y1="${F0}" x2="${f(X(h))}" y2="${bot}" stroke="var(--grid)" stroke-dasharray="2 4"/><text class="tm" x="${f(X(h))}" y="${bot+18}" text-anchor="middle" font-size="12.5">${l}</text>`});
+  s+=`<text class="tx" x="${x0}" y="${bot+44}" font-size="14" font-weight="600">TIME → how long it persists on surfaces (lab ranges, log)</text>`;
+  s+=`<text class="tx" x="${x0-12}" y="${F0-34}" font-size="0"></text>`;
+  // SIDE VIEW: space x tier, dots stacked, no overlap
+  const sx0=RW+60,cw=84,sw=cw*4;
+  s+=`<text class="tf mono" x="${sx0}" y="${F0-14}" font-size="12">SIDE VIEW · SPACE × DISINFECTANT</text>`;
+  [6,5,4,3,2,1].forEach(t=>{const[y0,h]=fy[t];s+=`<rect x="${sx0}" y="${y0}" width="${sw}" height="${h}" fill="var(--surface2)"/>`});
+  for(let i=1;i<4;i++)s+=`<line x1="${sx0+i*cw}" y1="${F0}" x2="${sx0+i*cw}" y2="${bot}" stroke="var(--grid)" stroke-dasharray="2 4"/>`;
+  const g3={};ORG.forEach(o=>{const k=o.sp+'-'+o.tier;(g3[k]=g3[k]||[]).push(o)});
+  Object.values(g3).forEach(arr=>{const per=4;arr.forEach((o,j)=>{const col=j%per,row=Math.floor(j/per),rows=Math.ceil(arr.length/per),inRow=Math.min(per,arr.length-row*per);
+    const cx=sx0+(o.sp-.5)*cw+(col-(inRow-1)/2)*17;const[y0,h]=fy[o.tier];const cy=y0+h/2+(row-(rows-1)/2)*17;const c=FEARC[o.fear];const air=o.k==='air'||o.k==='none';
+    s+=`<circle cx="${f(cx)}" cy="${f(cy)}" r="6.5" fill="${air?'var(--surface)':c}" stroke="${c}" stroke-width="2"><title>${o.n}</title></circle>`})});
+  ['Contact','Droplet','Airborne','Water'].forEach((n,i)=>{s+=`<text class="tm" x="${sx0+(i+.5)*cw}" y="${bot+18}" text-anchor="middle" font-size="12.5">${n}</text>`});
+  s+=`<text class="tx" x="${sx0}" y="${bot+44}" font-size="14" font-weight="600">SPACE → how far it travels</text>`;
+  // KEY in the empty top-right quadrant
+  const kx=sx0,ky=52;
+  s+=`<text class="tx" x="${kx}" y="${ky+14}" font-size="16" font-weight="700">Fear</text><text class="tm" x="${kx}" y="${ky+34}" font-size="12.5">What routine practice misses:</text><text class="tm" x="${kx}" y="${ky+50}" font-size="12.5">alcohol rub, routine wipe, surgical mask</text>`;
+  [['var(--bad)','Routine practice fails'],['var(--warn)','Depends on the product'],['var(--ok)','Works, if the step is done']].forEach(([c,l],i)=>{const yy=ky+80+i*26;s+=`<rect x="${kx}" y="${yy-10}" width="30" height="10" rx="2" fill="${c}"/><text class="tx" x="${kx+40}" y="${yy}" font-size="13.5">${l}</text>`});
+  const my=ky+178;s+=`<text class="tx" x="${kx}" y="${my}" font-size="16" font-weight="700">Marks</text>`;
+  s+=`<line x1="${kx}" y1="${my+22}" x2="${kx+30}" y2="${my+22}" stroke="var(--muted)" stroke-width="5" stroke-linecap="round"/><text class="tm" x="${kx+40}" y="${my+26}" font-size="12.5">Lab persistence range</text>`;
+  s+=`<line x1="${kx}" y1="${my+46}" x2="${kx+30}" y2="${my+46}" stroke="var(--muted)" stroke-width="5" opacity=".3"/><line x1="${kx}" y1="${my+46}" x2="${kx+8}" y2="${my+46}" stroke="var(--muted)" stroke-width="5"/><text class="tm" x="${kx+40}" y="${my+50}" font-size="12.5">Lower bound only</text>`;
+  s+=`<rect x="${kx+9}" y="${my+64}" width="11" height="11" transform="rotate(45 ${kx+14.5} ${my+69.5})" fill="var(--muted)"/><text class="tm" x="${kx+40}" y="${my+74}" font-size="12.5">Single reported value</text>`;
+  s+=`<circle cx="${kx+15}" cy="${my+94}" r="6" fill="var(--surface)" stroke="var(--muted)" stroke-width="2"/><text class="tm" x="${kx+40}" y="${my+98}" font-size="12.5">Airborne: no surface time</text>`;
+  const H=bot+64;
+  return shell({eyebrow:'Model · Engineering drawing',title:'Space, time, disinfectant and fear',q:'One object drawn three ways, like an orthographic part drawing: top view (time × space), front view (time × disinfectant), side view (space × disinfectant). Color is fear.',chip:'Final',chipc:'final',full:true,
+   fig:`<svg viewBox="0 0 ${sx0+sw+20} ${H}" role="img" aria-label="Three orthographic views of space, time and disinfectant, colored by fear">${s}</svg>`,
+   side:`<div><h3>The pattern</h3><p>Red sits in every corner: short and long, near and far, easy and hard to kill. Fear does not track time or toughness.</p></div>
+   <div><h3>The blue cluster</h3><p>Long-lived, easy-to-kill contact bacteria (MRSA, VRE, Acinetobacter, Pseudomonas, Klebsiella). The tools work; these spread when a step is skipped.</p></div>
+   <div class="note">Bars are laboratory persistence with high inocula, not transmission risk. Measles time is room air. TB surface viability is not its route.</div>`,
+   src:'Sources: Kramer 2006; Welsh 2017; Meister 2023; Mendis 2015; Lo 2026; CDC 2008 Fig. 1; CDC Appendix A; Kociolek 2023; Lionakis 2024.'})};
+function bar3(o,y,w,X,label,fs=13){const c=FEARC[o.fear];let s='',e;
+  if(o.k==='none'){s+=`<circle cx="${f(X(1))}" cy="${f(y)}" r="6" fill="var(--surface)" stroke="${c}" stroke-width="2"/>`;e=X(1)+6;if(label)s+=`<text class="tx" x="${f(e+8)}" y="${f(y+4)}" font-size="${fs}">TB (airborne; no surface time)</text>`;return s}
+  if(o.k==='single'){const x=X(o.lo);s+=`<rect x="${f(x-6)}" y="${f(y-6)}" width="12" height="12" transform="rotate(45 ${f(x)} ${f(y)})" fill="${c}"/>`;e=x+8}
+  else if(o.k==='lb'){const x=X(o.lo),x2=Math.min(x+60,X(26280));s+=`<line x1="${f(x)}" y1="${f(y)}" x2="${f(x2)}" y2="${f(y)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round" opacity=".3"/><line x1="${f(x)}" y1="${f(y)}" x2="${f(x+10)}" y2="${f(y)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;e=x2}
+  else{const x1=X(o.lo),x2=X(o.hi||o.lo);s+=`<line x1="${f(x1)}" y1="${f(y)}" x2="${f(x2)}" y2="${f(y)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;e=x2;if(o.k==='open'){s+=head(x2+4,y,1,0,c,7);e+=10}}
+  if(label)s+=`<text class="tx${italic(o.n)?' it':''}" x="${f(e+8)}" y="${f(y+4)}" font-size="${fs}">${o.n==='Measles'?'Measles (room air)':o.n}</text>`;
+  return s}
+
+/* Barrier sim */
+const SIM={
+'Measles':{src:'room air',s:[['H','Standard room'],['N'],['N'],['H','Surgical mask']],t:[['B','AIIR'],['N'],['N'],['B','N95']],gap:'Air stays infectious about 2 h after the patient leaves. Wipes and hand rub are not the route.',sev:'Up to 90% of susceptible contacts infected; R0 12–18.',dur:'about 2 h in room air (Lo 2026)'},
+'TB':{src:'room air',s:[['H','Standard room'],['N'],['N'],['H','Surgical mask']],t:[['B','AIIR'],['N'],['N'],['B','N95']],gap:'Surface viability is not the route. An unrecognized case is.',sev:'Not yet sourced here.',dur:'Surface 1 d–4 mo (not the route)'},
+'C. diff':{src:'surfaces',s:[['N'],['H','Quat wipe'],['H','Alcohol rub'],['N']],t:[['N'],['B','Sporicide'],['B','Soap + gloves'],['N']],gap:'Alcohol is not sporicidal; quat-only wipes miss spores.',sev:'Not yet sourced here.',dur:'Spores: 5 mo (single value)'},
+'Norovirus':{src:'vomit, stool',s:[['N'],['P','Label varies'],['P','Alcohol rub'],['N']],t:[['N'],['B','Bleach / List G'],['B','Soap + water'],['N']],gap:'Tiny infectious dose; alcohol less active; bleach if spread continues.',sev:'Not yet sourced here.',dur:'Surface 8 h–7 d (Kramer)'},
+'C. auris':{src:'skin, surfaces',s:[['N'],['H','Quat-only wipe'],['B','Alcohol rub'],['N']],t:[['N'],['B','List P'],['B','Alcohol rub'],['N']],gap:'Quat-only products are unreliable; hands are the last barrier.',sev:'High mortality in invasive infection (Lionakis 2024).',dur:'Plastic: at least 14 d'},
+'MRSA / VRE':{src:'surfaces',s:[['N'],['B','Hospital wipe'],['B','Alcohol rub'],['N']],t:[['N'],['B','List H'],['B','Alcohol rub'],['N']],gap:'The tools work. The failure is the step that gets skipped.',sev:'Not yet sourced here.',dur:'MRSA 7 d–7 mo; VRE 5 d–4 mo'},
+'Mpox':{src:'lesions, linen',s:[['N'],['P','Product varies'],['B','Alcohol rub'],['N']],t:[['N'],['B','Alcohol-based'],['B','Alcohol rub'],['N']],gap:'An H2O2 product failed in lab testing; alcohol worked.',sev:'Not yet sourced here.',dur:'≤11 d at 22 °C; ≤30 d at 4 °C'},
+'Legionella':{src:'plumbing',s:[['H','No water plan'],['N'],['N'],['N']],t:[['B','Water program'],['N'],['N'],['N']],gap:'Lives in pipes and biofilm; room cleaning never reaches it.',sev:'About 30% case fatality, healthcare-associated (verify).',dur:'Lab water ≥208 d; pipes for years'},
+'CPE (Kleb)':{src:'sink drains',s:[['P','Drains'],['B','Hospital wipe'],['B','Alcohol rub'],['N']],t:[['P','Drains'],['B','Hospital wipe'],['B','Alcohol rub'],['N']],gap:'Drains reseed. Once colonized, the plasmid can jump species.',sev:'Not yet sourced here.',dur:'Surface 2 h to >30 mo'}};
+const SIMST={cur:'Measles',kit:0,skip:false};let simRaf;
+V.sim=()=>shell({eyebrow:'Interactive · Swiss-cheese model',title:'Barrier simulator',q:'Pick a pathogen and a kit. The red dot either stops at an intact barrier or slips through the holes. Turn on skipped steps to add the human factor.',chip:'Interactive',chipc:'inter',narrow:true,
+  fig:`<div class="ctrls"><span class="lab">Pathogen</span>${Object.keys(SIM).map(k=>`<button class="pill" data-sim="${k}">${k}</button>`).join('')}</div>
+  <div class="ctrls"><span class="lab">Kit</span><button class="pill" data-kit="0">Standard kit</button><button class="pill" data-kit="1">Targeted kit</button>
+  <label style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);margin-left:8px"><input type="checkbox" id="simskip"> Steps skipped</label></div>
+  <svg id="simsvg" viewBox="0 0 680 230" role="img" aria-label="Barrier lane"></svg>
+  <div class="cards2"><div class="panel"><div class="lab">Outcome</div><div id="simout" style="font-weight:600"></div><div id="simgap" style="color:var(--muted);font-size:13.5px"></div></div>
+  <div class="panel"><div class="lab">If it gets through</div><div id="simsev"></div><div id="simdur" style="color:var(--muted);font-size:13.5px"></div></div></div>`,
+  side:`<div><h3>Slices</h3><div class="key"><div><span class="sw" style="background:var(--good)"></span>Blocks</div><div><span class="sw" style="background:var(--warn)"></span>Leaks (dot shrinks)</div><div><span class="sw" style="background:var(--bad)"></span>Hole</div><div><span class="sw" style="border:1.5px dashed var(--faint)"></span>Not this route</div></div></div>
+  <div><h3>Three lessons</h3><ul><li>Standard kit: measles, C. diff and Legionella get through. Wrong tool or wrong route.</li><li>Targeted kit with skipped steps: MRSA and C. auris get through anyway.</li><li>Persistence and severity sit side by side so “lasting” is never read as “dangerous.”</li></ul></div>
+  <div class="note">Barriers are modeled in series. In practice surfaces and hands are partly parallel routes.</div>`,
+  src:'Sources: CDC Appendix A; Kramer 2006; Lo 2026; Lionakis 2024; Meister 2023; Mendis 2015.'});
+function simRun(){const X=[190,300,410,520],NM=['Engineering','Surface wipe','Hands','Mask'];const d=SIM[SIMST.cur];
+  const st=(SIMST.kit?d.t:d.s).map((v,i)=>{let s=v[0],l=v[1]||'not this route';if(SIMST.skip&&(i===1||i===2)&&s!=='N'){s='H';l='Skipped'}return[s,l]});
+  let h=`<rect x="8" y="70" width="92" height="80" rx="8" fill="var(--surface2)" stroke="var(--line)"/><text class="tx" x="54" y="104" text-anchor="middle" font-size="14" font-weight="600">Reservoir</text><text class="tm" x="54" y="124" text-anchor="middle" font-size="12">${d.src}</text>
+  <rect x="580" y="70" width="92" height="80" rx="8" fill="var(--surface2)" stroke="var(--line)"/><text class="tx" x="626" y="104" text-anchor="middle" font-size="14" font-weight="600">Spread</text><text class="tm" x="626" y="124" text-anchor="middle" font-size="12">next host</text>
+  <line x1="100" y1="110" x2="580" y2="110" stroke="var(--line)" stroke-dasharray="3 4"/>`;
+  st.forEach(([s,l],i)=>{const x=X[i]-13;h+=`<text class="tm" x="${X[i]}" y="40" text-anchor="middle" font-size="12.5">${NM[i]}</text>`;
+    if(s==='B')h+=`<rect x="${x}" y="50" width="26" height="120" rx="6" fill="var(--good)" opacity=".85"/>`;
+    else if(s==='H')h+=`<rect x="${x}" y="50" width="26" height="44" rx="6" fill="var(--bad)" opacity=".85"/><rect x="${x}" y="126" width="26" height="44" rx="6" fill="var(--bad)" opacity=".85"/>`;
+    else if(s==='P')h+=`<rect x="${x}" y="50" width="26" height="54" rx="6" fill="var(--warn)" opacity=".85"/><rect x="${x}" y="116" width="26" height="54" rx="6" fill="var(--warn)" opacity=".85"/>`;
+    else h+=`<rect x="${x}" y="50" width="26" height="120" rx="6" fill="none" stroke="var(--faint)" stroke-dasharray="2 3"/>`;
+    h+=`<text class="tm" x="${X[i]}" y="192" text-anchor="middle" font-size="12">${l}</text>`});
+  h+=`<circle id="simdot" cx="100" cy="110" r="9" fill="var(--bad)" stroke="var(--surface)" stroke-width="2"/>`;
+  const svg=document.getElementById('simsvg');if(!svg)return;svg.innerHTML=h;
+  let stop=null,leak=false;st.forEach(([s],i)=>{if(stop===null){if(s==='B')stop=i;if(s==='P')leak=true}});
+  const out=document.getElementById('simout');out.textContent=stop===null?(leak?'Leaks through: reduced but not stopped':'Gets through'):'Stopped at '+NM[stop].toLowerCase()+' ('+st[stop][1]+')';
+  out.style.color=stop===null?'var(--bad)':'var(--good)';
+  document.getElementById('simgap').textContent=d.gap;document.getElementById('simsev').textContent=d.sev;document.getElementById('simdur').textContent='Persistence: '+d.dur;
+  document.querySelectorAll('[data-sim]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.sim===SIMST.cur));
+  document.querySelectorAll('[data-kit]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.kit===SIMST.kit));
+  const end=stop===null?600:X[stop]-24,dot=document.getElementById('simdot');let x=100,r=9;cancelAnimationFrame(simRaf);
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){st.forEach(([s],i)=>{if(s==='P'&&X[i]<end)r=Math.max(5,r-2)});dot.setAttribute('cx',end);dot.setAttribute('r',r);return}
+  (function step(){x+=4;st.forEach(([s],i)=>{if(s==='P'&&Math.abs(x-X[i])<3)r=Math.max(5,r-2)});if(x>=end)x=end;dot.setAttribute('cx',x);dot.setAttribute('r',r);if(x<end)simRaf=requestAnimationFrame(step)})()}
+function simWire(){document.querySelectorAll('[data-sim]').forEach(b=>b.onclick=()=>{SIMST.cur=b.dataset.sim;simRun()});
+  document.querySelectorAll('[data-kit]').forEach(b=>b.onclick=()=>{SIMST.kit=+b.dataset.kit;simRun()});
+  const c=document.getElementById('simskip');c.checked=SIMST.skip;c.onchange=()=>{SIMST.skip=c.checked;simRun()};simRun()}
+
+/* Shield */
+const SH=[
+{n:'Measles',h:2,t:'env',tough:1.5,halo:'R0 12–18',s:'HNNH',k:'BNNB',gap:'Air stays infectious ~2 h after exit. Surgical mask and standard room fail.',sev:'Up to 90% of susceptible contacts infected.',dur:'~2 h in room air'},
+{n:'TB',h:2,t:'myco',tough:5,s:'HNNH',k:'BNNB',gap:'Airborne. Surface viability is not the route.',sev:'Not yet sourced.',dur:'Air route'},
+{n:'Influenza',h:48,t:'env',tough:1.5,s:'NBBB',k:'NBBB',gap:'Droplet precautions work when used.',sev:'Not yet sourced.',dur:'1–2 d'},
+{n:'Norovirus',h:168,t:'nonenv',tough:5,halo:'18–1,000 particles',s:'NPPN',k:'NBBN',gap:'Alcohol less active; label claim needed; bleach if spread continues.',sev:'Not yet sourced.',dur:'8 h–7 d'},
+{n:'Mpox',h:264,t:'env',tough:1.5,s:'NPBN',k:'NBBN',gap:'An H2O2 product failed in lab; alcohol worked.',sev:'Not yet sourced.',dur:'≤11 d at 22 °C'},
+{n:'C. auris',h:336,t:'fungi',tough:3.5,s:'NHBN',k:'NBBN',gap:'Quat-only wipes unreliable; hands are the last barrier.',sev:'High mortality in invasive infection.',dur:'≥14 d on plastic'},
+{n:'VRE',h:2880,t:'veg',tough:2.5,s:'NBBN',k:'NBBN',gap:'Tools work; skipped steps are the failure.',sev:'Not yet sourced.',dur:'5 d–4 mo'},
+{n:'C. diff',h:3600,t:'spore',tough:7,s:'NHHN',k:'NBBN',gap:'Alcohol not sporicidal; quat-only wipes miss spores.',sev:'Not yet sourced.',dur:'5 mo (single value)'},
+{n:'Legionella',h:4992,t:'veg',tough:2.5,s:'HNNN',k:'BNNN',gap:'Lives in plumbing; room cleaning never reaches it.',sev:'~30% case fatality, healthcare-associated (verify).',dur:'≥208 d lab water; pipes for years'},
+{n:'MRSA',h:5040,t:'veg',tough:2.5,s:'NBBN',k:'NBBN',gap:'Prior room occupant raises acquisition odds.',sev:'Not yet sourced.',dur:'7 d–7 mo'},
+{n:'CPE',h:21900,t:'veg',tough:2.5,s:'PBBN',k:'PBBN',gap:'Sink drains reseed; plasmid can jump species.',sev:'Not yet sourced.',dur:'2 h to >30 mo'}];
+const SHST={kit:0,skip:false,sel:0};let shRaf;
+V.shield=()=>shell({eyebrow:'Interactive · Radial barrier shield',title:'Barrier shield',q:'The Swiss-cheese slices wrapped into rings around the reservoir. Each pathogen owns a sector as wide as its persistence. Particles escape through the gaps.',chip:'Interactive',chipc:'inter',narrow:true,
+  fig:`<div class="ctrls"><button class="pill" data-shk="0">Standard kit</button><button class="pill" data-shk="1">Targeted kit</button>
+  <label style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)"><input type="checkbox" id="shskip"> Steps skipped</label><button class="pill" id="shreplay">Replay</button></div>
+  <svg id="shsvg" viewBox="0 0 680 600" role="img" aria-label="Radial barrier shield"><g id="shr"></g><g id="shs"></g><g id="shd"></g>
+  <circle cx="340" cy="300" r="34" fill="var(--surface2)" stroke="var(--line)"/><text class="tx" x="340" y="304" text-anchor="middle" font-size="12" font-weight="600">Reservoir</text></svg>
+  <div class="panel" id="shdetail" style="margin-top:8px"></div>`,
+  side:`<div><h3>Rings, inside out</h3><p>Engineering, surface wipe, hands, mask or respirator.</p></div>
+  <div><h3>Arcs</h3><div class="key"><div><span class="sw" style="background:var(--good)"></span>Blocks</div><div><span class="sw" style="background:var(--warn)"></span>Leaks</div><div><span class="sw" style="background:var(--bad)"></span>Gap: fails</div></div></div>
+  <div><h3>Width and spoke</h3><p>Sector width: log surface persistence (upper value). Spoke thickness: disinfectant toughness. Amber halo: measured contagiousness.</p></div>
+  <div class="note">Sector width is an area metaphor, not measured exposure. Click a sector for details.</div>`,
+  src:'Sources: CDC Appendix A; Kramer 2006; Welsh 2017; Meister 2023; Mendis 2015; Lo 2026; Lionakis 2024.'});
+function shDraw(){const CX=340,CY=300,R=[60,105,150,195],RIM=232,LAB=['Engineering','Surface','Hands','Mask'];
+  const GAP0=14,W=SH.map(p=>Math.max(9,7+10*L(p.h)));const tot=W.reduce((a,b)=>a+b,0),sc=(360-2*GAP0)/tot;let a=GAP0;SH.forEach((p,i)=>{p.a1=a;p.a2=a+W[i]*sc;p.mid=(p.a1+p.a2)/2;a=p.a2});
+  const st=p=>[...(SHST.kit?p.k:p.s)].map((s,i)=>SHST.skip&&(i===1||i===2)&&s!=='N'?'H':s);
+  let rg='';R.forEach((r,i)=>{rg+=`<path d="${arc(CX,CY,r,-GAP0+2,GAP0-2)}" fill="none" stroke="var(--line)"/>`;const[x,y]=P(CX,CY,r,0);rg+=`<text class="tm" x="${f(x)}" y="${f(y-4)}" text-anchor="middle" font-size="10.5">${LAB[i]}</text>`});
+  rg+=`<circle cx="${CX}" cy="${CY}" r="${RIM}" fill="none" stroke="var(--line)" stroke-dasharray="2 4"/>`;
+  let sg='';SH.forEach((p,j)=>{const S=st(p);const[w1,w2]=[P(CX,CY,RIM,p.a1),P(CX,CY,RIM,p.a2)];
+    sg+=`<g class="node" data-i="${j}" tabindex="0"><path d="M${CX} ${CY} L${f(w1[0])} ${f(w1[1])} A${RIM} ${RIM} 0 0 1 ${f(w2[0])} ${f(w2[1])} Z" fill="${TCOL(p.t)}" fill-opacity="${SHST.sel===j?.14:.05}" stroke="var(--line)" stroke-width=".4"/>`;
+    S.forEach((s,i)=>{const r=R[i],d1=p.a1+1,d2=p.a2-1;
+      if(s==='B')sg+=`<path d="${arc(CX,CY,r,d1,d2)}" fill="none" stroke="var(--good)" stroke-width="7"/>`;
+      else if(s==='P')sg+=`<path d="${arc(CX,CY,r,d1,d2)}" fill="none" stroke="var(--warn)" stroke-width="5" stroke-dasharray="4 4"/>`;
+      else if(s==='H'){const m=(d1+d2)/2,g=Math.min(6,(d2-d1)/3);sg+=`<path d="${arc(CX,CY,r,d1,m-g)}" fill="none" stroke="var(--bad)" stroke-width="5"/><path d="${arc(CX,CY,r,m+g,d2)}" fill="none" stroke="var(--bad)" stroke-width="5"/>`}
+      else sg+=`<path d="${arc(CX,CY,r,d1,d2)}" fill="none" stroke="var(--faint)" stroke-dasharray="1 4"/>`});
+    const[lx,ly]=P(CX,CY,RIM+18,p.mid),anc=p.mid<170&&p.mid>10?'start':(p.mid>190&&p.mid<350?'end':'middle');
+    sg+=`<text class="tx${italic(p.n)?' it':''}" x="${f(lx)}" y="${f(ly+4)}" text-anchor="${anc}" font-size="12.5">${p.n}</text>`;
+    const[tx1,ty1]=P(CX,CY,R[3]+14,p.mid),[tx2,ty2]=P(CX,CY,RIM-6,p.mid);sg+=`<line x1="${f(tx1)}" y1="${f(ty1)}" x2="${f(tx2)}" y2="${f(ty2)}" stroke="${TCOL(p.t)}" stroke-width="${p.tough}" stroke-linecap="round"/>`;
+    if(p.halo){const[hx,hy]=P(CX,CY,RIM,p.mid);sg+=`<circle cx="${f(hx)}" cy="${f(hy)}" r="16" fill="none" stroke="var(--warn)" stroke-width="1.2" stroke-dasharray="3 3"/>`}
+    sg+='</g>'});
+  document.getElementById('shr').innerHTML=rg;document.getElementById('shs').innerHTML=sg;
+  document.querySelectorAll('#shs .node').forEach(g=>{const fn=()=>{SHST.sel=+g.dataset.i;shDraw()};g.onclick=fn;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();fn()}}});
+  const p=SH[SHST.sel],S=st(p),fi=S.findIndex(s=>s==='B'),esc=fi<0;
+  document.getElementById('shdetail').innerHTML=`<div style="font-weight:600">${p.n}: <span style="color:${esc?'var(--bad)':'var(--good)'}">${esc?'escapes':'stopped at '+LAB[fi].toLowerCase()}</span></div><div style="color:var(--muted);font-size:13.5px">${p.gap}</div><div style="font-size:13.5px">If it gets through: ${p.sev}</div><div style="color:var(--muted);font-size:13.5px">Persistence: ${p.dur}${p.halo?' · contagiousness: '+p.halo:''}</div>`;
+  document.querySelectorAll('[data-shk]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.shk===SHST.kit));
+  const D=SH.map(p=>{const S=st(p),fi=S.findIndex(s=>s==='B');let r=8;S.forEach((s,i)=>{if(s==='P'&&(fi<0||i<fi))r-=2});return{end:fi<0?RIM:R[fi]-9,r:Math.max(4,r),esc:fi<0}});
+  cancelAnimationFrame(shRaf);const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let r0=reduce?RIM:36;
+  const frame=()=>{let h='';SH.forEach((p,i)=>{const r=Math.min(r0,D[i].end),[x,y]=P(CX,CY,r,p.mid);h+=`<circle cx="${f(x)}" cy="${f(y)}" r="${r0>R[0]?D[i].r:8}" fill="${D[i].esc&&r>=RIM?'var(--bad)':TCOL(p.t)}" stroke="var(--surface)" stroke-width="1.5"/>`});
+    const el=document.getElementById('shd');if(!el)return;el.innerHTML=h;if(r0<RIM){r0+=2.5;shRaf=requestAnimationFrame(frame)}};frame()}
+function shWire(){document.querySelectorAll('[data-shk]').forEach(b=>b.onclick=()=>{SHST.kit=+b.dataset.shk;shDraw()});
+  const c=document.getElementById('shskip');c.checked=SHST.skip;c.onchange=()=>{SHST.skip=c.checked;shDraw()};document.getElementById('shreplay').onclick=shDraw;shDraw()}
+
+/* Precaution rings with badges */
+V.rings=()=>{const cx=300,cy=300,k=20,LL=h=>k*L(h);
+  const R={'Standard':70,'Contact':125,'Contact + soap/bleach':180,'Droplet':225,'Airborne':265};
+  const W={spore:9,myco:7,nonenv:6,fungi:4.5,veg:3,env:2};
+  const N=[['HAV','nonenv','Standard',125,'r',2,1440],['HBV','env','Standard',205,'lb',168],['Legionella*','veg','Standard',285,'lb',4992],['MRSA','veg','Contact',55,'r',168,5040],['VRE','veg','Contact',105,'r',120,2880],['Acineto','veg','Contact',155,'r',72,3600],['Pseudo','veg','Contact',205,'r',6,11680],['Kleb','veg','Contact',255,'open',2,21900],['C. auris','fungi','Contact',305,'lb',336],['C. diff','spore','Contact + soap/bleach',70,'single',3600],['Noro','nonenv','Contact + soap/bleach',210,'r',8,168],['Influenza','env','Droplet',115,'r',24,48],['Adeno','nonenv','Droplet',235,'r',168,2160],['Mpox†','env','Droplet',300,'mp',264,720],['Measles','env','Airborne',150,'air',1,2],['TB','myco','Airborne',245,'none']];
+  const B={'Measles':[1,1],'TB':[2,0],'C. diff':[3,1],'Noro':[4,1],'C. auris':[5,1],'Legionella*':[6,1],'Mpox†':[7,1],'Adeno':[8,0],'MRSA':[9,0],'VRE':[9,0],'Kleb':[10,0],'Pseudo':[10,0],'Acineto':[11,0],'HAV':[12,0],'HBV':[13,0],'Influenza':[14,0]};
+  let s=`<svg viewBox="0 0 600 600" role="img" aria-label="Precaution rings with persistence tails">`;
+  Object.entries(R).forEach(([n,r])=>{s+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${n==='Airborne'?'var(--s-env)':'var(--line)'}" stroke-dasharray="3 3"/><text class="tf" x="${cx}" y="${cy-r-5}" text-anchor="middle" font-size="11">${n}</text>`});
+  N.forEach(([n,t,ring,a,typ,lo,hi])=>{const r=R[ring],ar=a*Math.PI/180,px=cx+r*Math.sin(ar),py=cy-r*Math.cos(ar),tx=Math.cos(ar),ty=Math.sin(ar);const Q=d=>[px+tx*d,py+ty*d];const c=TCOL(t),w=W[t];
+    if(n==='Measles')s+=`<circle cx="${f(px)}" cy="${f(py)}" r="30" fill="none" stroke="var(--warn)" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+    if(n==='Noro')s+=`<circle cx="${f(px)}" cy="${f(py)}" r="22" fill="none" stroke="var(--warn)" stroke-width="1.2" stroke-dasharray="4 3"/>`;
+    const guide=(d)=>{const[x1,y1]=Q(d);return`<line x1="${f(px)}" y1="${f(py)}" x2="${f(x1)}" y2="${f(y1)}" stroke="${c}" stroke-width=".8" stroke-dasharray="1 3"/>`};
+    if(typ==='r'||typ==='open'){const[x1,y1]=Q(LL(lo)),[x2,y2]=Q(LL(hi));s+=guide(LL(lo))+`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="${c}" stroke-width="${w}" stroke-linecap="round"/>`;if(typ==='open')s+=head(x2+tx*3,y2+ty*3,tx,ty,c)}
+    else if(typ==='lb'){const[x1,y1]=Q(LL(lo)),[x2,y2]=Q(LL(lo)+16);s+=guide(LL(lo))+`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="${c}" stroke-width="${w}" stroke-dasharray="3 2"/>`+head(x2,y2,tx,ty,c)}
+    else if(typ==='single'){const[x1,y1]=Q(LL(lo));s+=guide(LL(lo))+`<rect x="${f(x1-7)}" y="${f(y1-7)}" width="14" height="14" transform="rotate(45 ${f(x1)} ${f(y1)})" fill="${c}"/>`}
+    else if(typ==='mp'){const[x1,y1]=Q(LL(lo)),[x2,y2]=Q(LL(hi));s+=`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="${c}" stroke-dasharray="2 2"/><circle cx="${f(x1)}" cy="${f(y1)}" r="4" fill="${c}"/><circle cx="${f(x2)}" cy="${f(y2)}" r="4" fill="var(--surface)" stroke="${c}" stroke-width="1.5"/>`}
+    const air=typ==='air'||typ==='none';s+=`<circle cx="${f(px)}" cy="${f(py)}" r="8" fill="${TBG(t)}" stroke="${TSTROKE(t)}" ${air?'stroke-dasharray="3 2"':''}/>`;
+    const ox=Math.sin(ar),oy=-Math.cos(ar);const anc=ox>.2?'start':(ox<-.2?'end':'middle');s+=`<text class="tx${italic(n)?' it':''}" x="${f(px+ox*20)}" y="${f(py+oy*20+4)}" text-anchor="${anc}" font-size="12">${n}</text>`;
+    const[num,red]=B[n];const bx=px+(ox>.2?-12:12),by=py-13;s+=`<circle cx="${f(bx)}" cy="${f(by)}" r="8.5" fill="${red?'var(--bad)':'var(--warn)'}"/><text x="${f(bx)}" y="${f(by+3.5)}" text-anchor="middle" font-size="9.5" font-weight="700" fill="var(--surface)">${num}</text>`});
+  s+='</svg>';
+  const CON=[[1,1,'Measles: infectious in room air about 2 h after exit'],[2,0,'TB: airborne; surface data are not the route'],[3,1,'C. diff: alcohol is not sporicidal; soap, sporicide'],[4,1,'Norovirus: tiny dose; bleach if spread continues'],[5,1,'C. auris: quat-only products unreliable'],[6,1,'Legionella: lives in plumbing; wipes miss it'],[7,1,'Mpox: an H2O2 product failed in lab; alcohol worked'],[8,0,'Adenovirus: eye-clinic outbreaks'],[9,0,'MRSA, VRE: prior room occupant raises risk'],[10,0,'Kleb, Pseudomonas: sink drains, plasmids'],[11,0,'Acinetobacter: survives drying for months'],[12,0,'HAV: contact if diapered or incontinent'],[13,0,'HBV: persists more than 1 week'],[14,0,'Influenza: droplet; brief on surfaces']];
+  return shell({eyebrow:'Explored · Precaution rings',title:'How far it reaches, how long it lasts',q:'Rings expand by CDC precaution level. Each tail runs the organism’s lab persistence on a log scale; thicker tails are harder to kill. Numbered badges flag the specific concern.',chip:'Explored',chipc:'old',narrow:true,fig:s,
+   side:`<div><h3>Concerns</h3><div class="key" style="gap:5px">${CON.map(([n,r,t])=>`<div style="align-items:flex-start"><span style="flex:none;width:20px;height:20px;border-radius:50%;background:${r?'var(--bad)':'var(--warn)'};color:var(--surface);font-size:11px;font-weight:700;display:grid;place-items:center">${n}</span><span style="font-size:13px">${t}</span></div>`).join('')}</div></div>
+   <div><p>Red badge: a routine step fails. Amber: watch for this. Amber halo: measured contagiousness (measles R0 12–18; norovirus 18–1,000 particles). *Not person to person. †Mpox: gown, gloves, eye protection, N95.</p></div>`,
+   src:'Sources: CDC Appendix A; Kramer 2006; Lo 2026; Lionakis 2024; Meister 2023; Huang 2006; León-Sampedro 2021; Mendis 2015.'})};
+
+/* Route x time */
+V.route=()=>{const x0=120,xw=480,X=h=>x0+xw*L(h)/LM;const bands=[['Airborne',1],['Droplet',2],['Fecal-oral · blood',3],['Contact',4]];const bh=[70,70,90,190];
+  const tough={spore:6,myco:5,nonenv:4,fungi:3.5,veg:2,env:1.2};
+  const place={'Measles':[1,2],'TB':[1,null],'Influenza':[2,48],'Adenovirus':[2,2160],'Norovirus':[3,168],'HAV':[3,1440],'HBV':[3,168],'C. diff':[4,3600],'C. auris':[4,336],'MRSA':[4,5040],'VRE':[4,2880],'Acinetobacter':[4,3600],'Pseudomonas':[4,11680],'Kleb (CPE)':[4,21900],'Mpox':[4,720]};
+  let s=`<svg viewBox="0 0 700 520" role="img" aria-label="Survival time by transmission route">`;let y=20,ys={};
+  bands.forEach(([n,i],j)=>{ys[i]=[y,bh[j]];s+=`<rect x="${x0}" y="${y}" width="${xw+60}" height="${bh[j]-4}" fill="var(--surface2)"/><text class="tx" x="${x0-10}" y="${y+bh[j]/2}" text-anchor="end" font-size="13" font-weight="600">${n}</text>`;y+=bh[j]});
+  tickH.forEach(([h,l])=>{s+=`<line x1="${f(X(h))}" y1="20" x2="${f(X(h))}" y2="${y}" stroke="var(--grid)" stroke-dasharray="2 4"/><text class="tm" x="${f(X(h))}" y="${y+18}" text-anchor="middle" font-size="12">${l}</text>`});
+  const cnt={};Object.entries(place).forEach(([n,[b,h]])=>{const o=ORG.find(q=>q.n===n);cnt[b]=(cnt[b]||0)+1;const per=Object.values(place).filter(v=>v[0]===b).length;const[y0,hh]=ys[b];const cy=y0+(cnt[b]-.5)*(hh-4)/per;
+    if(n==='Measles')s+=`<circle cx="${f(X(h)+12)}" cy="${f(cy)}" r="20" fill="none" stroke="var(--warn)" stroke-dasharray="3 3"/>`;
+    if(n==='Norovirus')s+=`<circle cx="${f(X(h))}" cy="${f(cy)}" r="16" fill="none" stroke="var(--warn)" stroke-dasharray="3 3"/>`;
+    const cx=h?X(h):x0+12;const air=o.route==='air';s+=`<circle cx="${f(n==='Measles'?cx+12:cx)}" cy="${f(cy)}" r="8" fill="${air?'var(--surface)':TBG(o.t)}" stroke="${TSTROKE(o.t)}" stroke-width="${tough[o.t]}" ${air?'stroke-dasharray="3 2"':''}/>`;
+    s+=`<text class="tx${italic(n)?' it':''}" x="${f((n==='Measles'?cx+12:cx)+14)}" y="${f(cy+4)}" font-size="12">${n}${n==='TB'?' (no surface time)':''}</text>`});
+  s+=`<text class="tm" x="${x0}" y="${y+40}" font-size="12.5">Time: longest reported lab persistence (log). Ring thickness: disinfectant toughness.</text></svg>`;
+  return shell({eyebrow:'Explored · Route template',title:'Survival time by route',q:'The first axis sketch: time on the horizontal, route on the vertical. The upper-right corner stays empty. Airborne pathogens do not persist, and long-lived ones sit on surfaces.',chip:'Explored',chipc:'old',narrow:true,fig:s,
+   side:`<div>${keyTypes()}</div><div><h3>Halo</h3><p>Amber dashed halo marks measured contagiousness. The two metrics differ (measles R0, norovirus infectious dose), so halos are markers, not a shared scale.</p></div>
+   <div class="note">Plots only the upper persistence value. The Lasting vs tough view shows full ranges.</div>`,
+   src:'Sources: Kramer 2006; Welsh 2017; Meister 2023; Lo 2026; CDC 2008 Fig. 1.'})};
+
+/* Lasting vs tough */
+V.lasting=()=>{const x0=170,xw=430,X=h=>x0+xw*L(h)/LM;const rc=r=>`var(--r-${r})`;
+  let s=`<svg viewBox="0 0 740 470" role="img" aria-label="Persistence range by disinfectant tier">`;let y=34;const top=y;
+  [6,5,4,3,2,1].forEach(t=>{const items=ORG.filter(o=>o.tier===t&&o.n!=='Legionella');s+=`<text class="tx" x="16" y="${y+14}" font-size="13.5" font-weight="700">${TIERNAME[t]}</text>`;
+    items.forEach(o=>{const m=y+9,c=rc(o.route);s+=`<text class="tm${italic(o.n)?' it':''}" x="${x0-12}" y="${m+4}" text-anchor="end" font-size="12.5">${o.n}</text>`;let e;
+      if(o.k==='r'||o.k==='open'){s+=`<line x1="${f(X(o.lo))}" y1="${m}" x2="${f(X(o.hi))}" y2="${m}" stroke="${c}" stroke-width="7" stroke-linecap="round"/>`;e=X(o.hi);if(o.k==='open'){s+=head(e+6,m,1,0,c,8);e+=10}}
+      else if(o.k==='single'){const x=X(o.lo);s+=`<rect x="${f(x-7)}" y="${m-7}" width="14" height="14" transform="rotate(45 ${f(x)} ${m})" fill="${c}"/>`;e=x+4}
+      else if(o.k==='lb'){const x=X(o.lo);s+=`<line x1="${f(x)}" y1="${m}" x2="${f(x+28)}" y2="${m}" stroke="${c}" stroke-width="7" stroke-dasharray="4 3"/>`+head(x+32,m,1,0,c,7);e=x+36}
+      else if(o.k==='mp'){const a=X(o.lo),b=X(o.hi);s+=`<line x1="${f(a)}" y1="${m}" x2="${f(b)}" y2="${m}" stroke="${c}" stroke-width="1.5" stroke-dasharray="2 2"/><circle cx="${f(a)}" cy="${m}" r="5" fill="${c}"/><circle cx="${f(b)}" cy="${m}" r="5" fill="var(--surface)" stroke="${c}" stroke-width="1.5"/>`;e=b}
+      else if(o.k==='air'){const b=X(o.hi);s+=`<rect x="${x0}" y="${m-5}" width="${f(b-x0)}" height="10" fill="none" stroke="${c}" stroke-width="1.2" stroke-dasharray="2 2"/>`;e=b}
+      else{s+=`<line x1="${f(X(24))}" y1="${m}" x2="${f(X(2880))}" y2="${m}" stroke="${c}" stroke-width="7" stroke-dasharray="6 3" opacity=".6"/>`;e=X(2880)}
+      s+=`<text class="tm" x="${f(e+10)}" y="${m+4}" font-size="12">${o.n==='TB'?'1 d–4 mo (air route)':RANGE[o.n]}</text>`;y+=19});y+=8});
+  tickH.forEach(([h,l])=>{s+=`<line x1="${f(X(h))}" y1="${top-6}" x2="${f(X(h))}" y2="${y}" stroke="var(--grid)" stroke-dasharray="2 3"/><text class="tm" x="${f(X(h))}" y="${y+16}" text-anchor="middle" font-size="12">${l}</text>`});
+  s+=`<text class="tf mono" x="16" y="20" font-size="11">MOST RESISTANT AT TOP (CDC FIG. 1)</text></svg>`;
+  return shell({eyebrow:'Explored · Model 1',title:'Lasting is not the same as tough',q:'Rows follow how hard each organism is to kill; bars show how long it persists on dry surfaces in the lab. Pseudomonas and MRSA outlast C. diff spores, yet die to any hospital wipe.',chip:'Explored',chipc:'old',narrow:true,fig:s,
+   side:`<div><h3>Route</h3><div class="key">${[['contact','Contact'],['enteric','Fecal-oral'],['droplet','Droplet'],['air','Airborne'],['blood','Blood']].map(([k,l])=>`<div><span class="sw" style="background:var(--r-${k})"></span>${l}</div>`).join('')}</div></div>
+   <div><h3>Marks</h3><p>Diamond: single reported value. Dashed arrow: lower bound only. Open dots (mpox): 22 °C and 4 °C. Dashed outline: measles in room air.</p></div>
+   <div class="note">Laboratory persistence with high inocula. It is not transmission or infection risk.</div>`,
+   src:'Sources: Kramer 2006; Welsh 2017; Meister 2023; Lo 2026; CDC 2008 Fig. 1.'})};
+
+/* Failure map */
+V.failure=()=>{const cols=['Hand rub','Routine wipe','Surgical mask','N95 + AIIR','Water program'];
+  const R=[['Measles','—','—','F','B','—'],['TB','—','—','F','B','—'],['Influenza','B','B','B','B','—'],['Norovirus','L','L*','—','—','—'],['C. diff','F','F*','—','—','—'],['C. auris','B','F*','—','—','—'],['Mpox','B','L*','—','—','—'],['MRSA, VRE','B','B','—','—','—'],['Legionella','—','—','—','—','B'],['CPE','B','B','—','—','L']];
+  const M={B:['var(--good)','Blocks'],L:['var(--warn)','Leaks'],F:['var(--bad)','Fails']};const cw=110,x0=140,rh=30,y0=44;
+  let s=`<svg viewBox="0 0 700 ${y0+R.length*rh+16}" role="img" aria-label="Barrier failure map">`;
+  cols.forEach((c,j)=>{s+=`<text class="tx" x="${x0+j*cw+cw/2}" y="28" text-anchor="middle" font-size="13" font-weight="600">${c}</text>`});
+  R.forEach((row,i)=>{const y=y0+i*rh;s+=`<text class="tm${italic(row[0])?' it':''}" x="${x0-12}" y="${y+rh/2+4}" text-anchor="end" font-size="13">${row[0]}</text>`;
+    row.slice(1).forEach((v,j)=>{const x=x0+j*cw+4;if(v==='—'){s+=`<rect x="${x}" y="${y+3}" width="${cw-8}" height="${rh-6}" rx="5" fill="none" stroke="var(--line)" stroke-dasharray="2 3"/>`;return}
+      const[c,l]=M[v[0]];s+=`<rect x="${x}" y="${y+3}" width="${cw-8}" height="${rh-6}" rx="5" fill="${c}" fill-opacity=".22" stroke="${c}"/><text class="tx" x="${x+(cw-8)/2}" y="${y+rh/2+4}" text-anchor="middle" font-size="12.5" font-weight="600">${l}${v.includes('*')?'*':''}</text>`})});
+  return shell({eyebrow:'Explored · Model 2',title:'Where our tools fail',q:'Each everyday barrier checked against each organism. Red cells are wrong-tool failures. They are few, and each is a fixable product choice.',chip:'Explored',chipc:'old',narrow:true,fig:s+'</svg>',
+   side:`<div><h3>Cells</h3><div class="key"><div><span class="sw" style="background:var(--good)"></span>Blocks</div><div><span class="sw" style="background:var(--warn)"></span>Leaks</div><div><span class="sw" style="background:var(--bad)"></span>Fails</div><div><span class="sw" style="border:1.5px dashed var(--faint)"></span>Not the route</div></div></div>
+   <div><p>*Product-dependent: the right EPA label claim or a sporicide turns the cell to Blocks.</p></div>`,
+   src:'Sources: CDC Appendix A; Kociolek 2023; Lionakis 2024; Meister 2023; Mendis 2015; Hall 2011.'})};
+
+/* Human factor */
+let HUM=50;
+V.human=()=>shell({eyebrow:'Explored · Model 3',title:'The human multiplier',q:'Twenty hand-hygiene opportunities per row. A better product changes only the performed blocks. Behavior changes every row. Set the slider to your unit’s audit rate.',chip:'Interactive',chipc:'inter',narrow:true,
+  fig:`<div class="range"><label for="humr">Compliance</label><input type="range" id="humr" min="0" max="100" step="5" value="${HUM}"><b id="humv" style="color:var(--fg);font-family:var(--font-mono)">${HUM}%</b></div><svg id="humsvg" viewBox="0 0 680 230" role="img" aria-label="Hand hygiene opportunities"></svg>`,
+  side:`<div><h3>Blocks</h3><div class="key"><div><span class="sw" style="background:var(--good)"></span>Performed and effective</div><div><span class="sw" style="background:var(--warn)"></span>Performed, wrong product</div><div><span class="sw" style="background:var(--bad)"></span>Missed</div></div></div>
+  <div><p>The default 50% is reported healthcare-worker compliance from Kramer 2006, not a local figure.</p></div>`,
+  src:'Sources: Kramer 2006 (compliance); Kociolek 2023 (C. diff hand hygiene); Hall 2011 (norovirus).'});
+function humDraw(){const rows=[['MRSA, VRE, C. auris','Alcohol rub',1],['C. diff','Alcohol rub',0],['C. diff','Soap and water',1],['Norovirus (outbreak)','Soap and water',1]];
+  const done=Math.round(20*HUM/100);let s='';rows.forEach(([n,p,ok],i)=>{const y=12+i*54;s+=`<text class="tx" x="0" y="${y+12}" font-size="13" font-weight="600">${n}</text><text class="tm" x="0" y="${y+29}" font-size="12">${p}</text>`;
+    for(let j=0;j<20;j++){const c=j<done?(ok?'var(--good)':'var(--warn)'):'var(--bad)';s+=`<rect x="${190+j*24}" y="${y+2}" width="19" height="28" rx="3" fill="${c}" fill-opacity="${j<done?.85:.25}" stroke="${c}"/>`}});
+  document.getElementById('humsvg').innerHTML=s;document.getElementById('humv').textContent=HUM+'%'}
+function humWire(){const r=document.getElementById('humr');r.oninput=()=>{HUM=+r.value;humDraw()};humDraw()}
+
+/* Rose */
+V.rose=()=>{const CX=470,CY=440,R0=62,R1=285,r=h=>R0+(R1-R0)*L(h)/LM;const rc=k=>`var(--r-${k})`;const BC={B:'var(--fg)',L:'var(--warn)',F:'var(--bad)'};
+  const T=[[['C. diff','enteric','single',3600,null,'FF-']],[['TB','air','outline',24,2880,'--F']],[['Adeno','droplet','r',168,2160,'?LB'],['HAV','enteric','r',2,1440,'?L-'],['Noro','enteric','r',8,168,'LL-']],[['C. auris','contact','lb',336,null,'BF-']],[['Kleb','contact','open',2,21900,'BB-'],['Pseudo','contact','r',6,11680,'BB-'],['MRSA','contact','r',168,5040,'BB-'],['Acineto','contact','r',72,3600,'BB-'],['VRE','contact','r',120,2880,'BB-']],[['Mpox','contact','mp',264,720,'BL?'],['HBV','blood','lb',168,null,'BB-'],['Influenza','droplet','r',24,48,'BBB'],['Measles','air','air',1,2,'BBF']]];
+  const TOP=18,TG=7,n=16,WD=(360-TOP-TG*5)/n;let s=`<svg viewBox="0 0 940 900" role="img" aria-label="Rose diagram of persistence with barrier halo">`;
+  tickH.forEach(([h,l])=>{s+=`<circle cx="${CX}" cy="${CY}" r="${f(r(h))}" fill="none" stroke="var(--line)" stroke-dasharray="3 5"/>`;const[x,y]=P(CX,CY,r(h),0);s+=`<text class="tm" x="${f(x+5)}" y="${f(y-5)}" font-size="14">${l}</text>`});
+  let a=TOP/2;T.forEach(items=>{const ta=a;items.forEach(([name,rt,typ,lo,hi,bar])=>{const a1=a+.8,a2=a+WD-.8,c=rc(rt),mid=(a1+a2)/2;
+    if(typ==='r'||typ==='open')s+=`<path d="${sect(CX,CY,r(lo),r(hi),a1,a2)}" fill="${c}" fill-opacity=".8"/>`;
+    if(typ==='open')s+=`<path d="${sect(CX,CY,r(hi),R1+8,a1,a2)}" fill="${c}" fill-opacity=".25"/>`;
+    if(typ==='lb')s+=`<path d="${sect(CX,CY,r(lo),Math.min(r(lo)+70,R1+8),a1,a2)}" fill="${c}" fill-opacity=".35"/><path d="${sect(CX,CY,r(lo),r(lo)+8,a1,a2)}" fill="${c}"/>`;
+    if(typ==='single'){s+=`<path d="${sect(CX,CY,r(lo)-5,r(lo)+5,a1,a2)}" fill="${c}"/>`}
+    if(typ==='mp')s+=`<path d="${sect(CX,CY,r(lo)-6,r(lo),a1,a2)}" fill="${c}"/><path d="${sect(CX,CY,r(lo),r(hi),a1,a2)}" fill="${c}" fill-opacity=".3"/>`;
+    if(typ==='outline')s+=`<path d="${sect(CX,CY,r(lo),r(hi),a1,a2)}" fill="${c}" fill-opacity=".08" stroke="${c}" stroke-width="2" stroke-dasharray="6 4"/>`;
+    if(typ==='air')s+=`<path d="${sect(CX,CY,R0,r(hi),a1,a2)}" fill="${c}" fill-opacity=".25" stroke="${c}" stroke-width="2" stroke-dasharray="4 3"/>`;
+    [...bar].forEach((b,k)=>{const rr=R1+22+k*17;if(BC[b])s+=`<path d="${arc(CX,CY,rr,a1+.6,a2-.6)}" fill="none" stroke="${BC[b]}" stroke-width="11"/>`;else s+=`<path d="${arc(CX,CY,rr,a1+.6,a2-.6)}" fill="none" stroke="var(--line)" stroke-width="1.5" ${b==='-'?'stroke-dasharray="1 4"':''}/>`});
+    const[x,y]=P(CX,CY,R1+86,mid),sn=Math.sin(mid*Math.PI/180);s+=`<text class="tx${italic(name)?' it':''}" x="${f(x)}" y="${f(y+6)}" text-anchor="${sn>.2?'start':(sn<-.2?'end':'middle')}" font-size="19">${name}</text>`;a+=WD});
+    s+=`<path d="${arc(CX,CY,R0-14,ta+1,a-1)}" fill="none" stroke="var(--faint)" stroke-width="4" stroke-linecap="round"/>`;a+=TG});
+  s+=`<circle cx="${CX}" cy="${CY}" r="${R0-24}" fill="var(--surface2)"/><text class="tf mono" x="${CX}" y="${CY+5}" text-anchor="middle" font-size="12">RESERVOIR</text></svg>`;
+  return shell({eyebrow:'Explored · Superseded',title:'Persistence rose',q:'A Nightingale-style rose: petals for persistence, a three-ring halo for hand rub, routine wipe and surgical mask. Kept for comparison.',chip:'Superseded',chipc:'old',narrow:true,fig:s,
+   side:`<div class="note">Why it was replaced: radius maps to log time, so outer petals grow with radius squared and long-lived organisms look far bigger than the data support. The largest petals are the organisms where tools work, the opposite of the message.</div>
+   <div><h3>Halo, inside out</h3><p>Hand rub, routine wipe, surgical mask.</p><div class="key" style="margin-top:6px"><div><span class="sw" style="background:var(--fg)"></span>Blocks</div><div><span class="sw" style="background:var(--warn)"></span>Leaks</div><div><span class="sw" style="background:var(--bad)"></span>Fails</div><div><span class="sw" style="border:1.5px dashed var(--faint)"></span>Not the route or not sourced</div></div></div>`,
+   src:'After Nightingale’s 1858 rose diagram. Sources: Kramer 2006; Welsh 2017; Meister 2023; CDC 2008 Fig. 1; CDC Appendix A; Kociolek 2023; Lionakis 2024; Lo 2026.'})};
+
+
+/* ---------- Quantum orbital map (home) ---------- */
+function quantumMap(){
+  const CX=560,CY=440,SH={6:0,5:72,4:145,3:210,2:275,1:340};
+  const Q=[['C. diff',6,0,3600,'red','5 mo'],['TB',5,320,null,'red','not a fomite route',1],['Adenovirus',4,10,2160,'amber','≤3 mo'],['Hepatitis A',4,82,1440,'amber','≤2 mo'],['Norovirus',4,160,168,'amber','≤1 wk'],['C. auris',3,118,336,'red','≥2 wk'],
+   ['MRSA',2,40,5040,'ok','≤7 mo'],['VRE',2,100,2880,'ok','≤4 mo'],['Acinetobacter',2,128,3600,'ok','≤5 mo'],['Pseudomonas',2,172,11680,'ok','≤16 mo'],['Klebsiella / CPE',2,238,21900,'ok','>2.5 yr'],['Legionella',2,262,4992,'red','≥7 mo'],
+   ['Influenza',1,348,48,'ok','≤2 d'],['Mpox',1,60,720,'amber','11 d / 30 d'],['Hepatitis B',1,132,168,'ok','≥1 wk'],['Measles',1,302,2,'red','2 h room air',1]];
+  const HUBS={'Surgical mask':[1150,130,'airborne passes'],'Alcohol hand rub':[1150,330,'spores, norovirus'],'Routine wipe (quat)':[1150,560,'*List G, K, P or sporicide fixes'],'Room cleaning':[1150,770,'sinks, drains, water']};
+  const E=[['Surgical mask','Measles','R'],['Surgical mask','TB','R'],['Alcohol hand rub','C. diff','R'],['Alcohol hand rub','Norovirus','A'],['Routine wipe (quat)','C. diff','R'],['Routine wipe (quat)','C. auris','R'],['Routine wipe (quat)','Norovirus','A'],['Routine wipe (quat)','Adenovirus','A'],['Routine wipe (quat)','Hepatitis A','A'],['Routine wipe (quat)','Mpox','A'],['Room cleaning','Legionella','R'],['Room cleaning','Klebsiella / CPE','A'],['Room cleaning','Pseudomonas','A']];
+  const FC={red:'var(--bad)',amber:'var(--warn)',ok:'var(--ok)'};
+  let s=`<svg viewBox="0 0 1460 880" class="hl" role="img" aria-label="Quantum orbital map: shells by disinfectant tier, sectors by route, cloud size by persistence, beams through failed barriers"><defs>${['red','amber','ok'].map(k=>`<radialGradient id="qg-${k}"><stop offset="0" style="stop-color:${FC[k]};stop-opacity:.45"/><stop offset="1" style="stop-color:${FC[k]};stop-opacity:0"/></radialGradient>`).join('')}</defs>`;
+  [5,4,3,2,1].forEach(t=>{s+=`<circle cx="${CX}" cy="${CY}" r="${SH[t]}" fill="none" stroke="var(--line)" stroke-width="1.2"/>`;const[x,y]=P(CX,CY,SH[t]-12,192);s+=`<text class="tf" x="${f(x)}" y="${f(y)}" font-size="13" text-anchor="end">T${t} ${['','enveloped virus','vegetative bacteria','fungi','non-enveloped virus','mycobacteria'][t]}</text>`});
+  [30,230,275,330].forEach(a=>{const[x1,y1]=P(CX,CY,30,a),[x2,y2]=P(CX,CY,372,a);s+=`<line x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke="var(--line)" stroke-dasharray="2 6"/>`});
+  [['DROPLET',0,392],['CONTACT',150,415],['WATER SYSTEM',252,398],['AIRBORNE',302,398]].forEach(([l,a,r])=>{const[x,y]=P(CX,CY,r,a);s+=`<text class="tm mono" x="${f(x)}" y="${f(y)}" text-anchor="middle" font-size="14" font-weight="600">${l}</text>`});
+  const pos={};Q.forEach(q=>{pos[q[0]]=P(CX,CY,SH[q[1]],q[2])});
+  E.forEach(([h,n,st])=>{const[hx,hy]=HUBS[h];const tx=hx-24;const[nx,ny]=pos[n];const dx=tx-nx,dy=hy-ny,l=Math.hypot(dx,dy);const qx=(tx+nx)/2-dy/l*30,qy=(hy+ny)/2+dx/l*30;
+    s+=`<path class="dimmable" data-h="${h}" data-n="${n}" d="M${f(nx)} ${f(ny)} Q${f(qx)} ${f(qy)} ${tx} ${hy}" fill="none" stroke="${st==='R'?'var(--bad)':'var(--warn)'}" stroke-width="2.4" ${st==='R'?'':'stroke-dasharray="8 6"'} opacity=".85"/>`});
+  Q.forEach(([n,t,a,h,fr,lab,air])=>{const[x,y]=pos[n];const c=FC[fr];const cloud=12+5*L(h||2);
+    s+=`<g class="node dimmable" data-n="${n}" tabindex="0"><circle cx="${f(x)}" cy="${f(y)}" r="${f(cloud+10)}" fill="url(#qg-${fr})"/>`;
+    if(air)s+=`<circle cx="${f(x)}" cy="${f(y)}" r="16" fill="none" stroke="${c}" stroke-width="2" stroke-dasharray="4 4"/>`;
+    s+=fr==='ok'?`<circle cx="${f(x)}" cy="${f(y)}" r="8" fill="var(--surface)" stroke="${c}" stroke-width="2.4"/>`:`<circle cx="${f(x)}" cy="${f(y)}" r="${air?6:9}" fill="${air?'var(--surface)':c}" stroke="${c}" stroke-width="2.4"/>`;
+    const cd=n==='C. diff';const bx=cd?x+12:x+(air?24:20),by=cd?y+40:y;s+=`<rect x="${f(bx)}" y="${f(by-11)}" width="28" height="21" rx="4" fill="${c}"/><text x="${f(bx+14)}" y="${f(by+4.5)}" text-anchor="middle" font-size="13" font-weight="700" fill="var(--surface)">T${t}</text>`;
+    s+=`<text class="tx${italic(n)?' it':''}" x="${f(bx+36)}" y="${f(by+6)}" font-size="18" font-weight="600">${n} <tspan class="tm" font-size="14" font-weight="400">${lab}</tspan></text></g>`});
+  Object.entries(HUBS).forEach(([h,[x,y,sub]])=>{s+=`<g class="node dimmable" data-h="${h}" tabindex="0"><rect x="${x-20}" y="${y-20}" width="40" height="40" rx="6" transform="rotate(45 ${x} ${y})" fill="var(--fg)"/><text class="tx" x="${x+38}" y="${y-2}" font-size="20" font-weight="700">${h}</text><text class="tm" x="${x+38}" y="${y+21}" font-size="14">${sub}</text></g>`});
+  return s+'</svg>';
+}
+const QUANTUM=()=>`<section class="quantum"><div class="q-intro"><div class="eyebrow">Part 3 · Back to the 1850s?</div><h2>Quantum orbital map</h2><p class="q">Each organism is an electron cloud. The harder it is to kill, the closer it sits to the nucleus.</p>
+<div class="eyebrow" style="margin-top:16px">How to read it</div><dl class="qdl"><dt>Shell</dt><dd>Disinfectant tier; nucleus = spores (T6)</dd><dt>Sector</dt><dd>Space: how far it travels</dd><dt>Cloud size</dt><dd>Time: longest dry-surface persistence</dd><dt>Colour</dt><dd>Fear: what routine practice misses</dd><dt>Beam</dt><dd>A barrier it passes through</dd></dl>
+<div class="key"><div><span class="dot" style="background:var(--bad);border-color:var(--bad)"></span>Fails a routine barrier</div><div><span class="dot" style="background:var(--warn);border-color:var(--warn)"></span>Leaks or product-dependent</div><div><span class="dot" style="border-color:var(--ok)"></span>Ground state: covered if the step happens</div><div><span class="dot" style="border:2px dashed var(--bad)"></span>Airborne: dashed ring</div><div><span class="ln solid" style="border-color:var(--bad)"></span>fails <span class="ln" style="border-color:var(--warn);margin-left:10px"></span>leaks</div></div>
+<p class="q" style="font-size:13.5px">Ground-state clouds have no beams. They are stopped only when hands are cleaned and surfaces wiped. Hover any cloud or detector to trace it.</p></div>
+<div class="fig" style="min-width:0">${quantumMap()}</div></section>
+<p class="sources" style="margin-top:6px">Sources: CDC 2008 Fig. 1; CDC Appendix A; Kramer 2006; Welsh 2017; Meister 2023; Mendis 2015; Lo 2026; Kociolek 2023; Lionakis 2024; Hall 2011.</p>`;
+
+/* ---------- Precaution game ---------- */
+const GSL=[['room','Room',['Standard room','AIIR','Water program']],['surf','Surface',['Quat wipe','Hospital wipe (List H)','List P product','Bleach / sporicide']],['hands','Hands',['Alcohol rub','Soap and water']],['mask','Mask',['None','Surgical mask','N95']]];
+const ALLH={'Alcohol rub':'B','Soap and water':'B'};
+const GAME=[
+ {n:'Measles',fr:'red',sc:'Unvaccinated child in the ED with fever, cough and a rash.',res:'room air',air:1,req:{room:{'AIIR':'B'},mask:{'N95':'B'}},why:'Airborne: an AIIR and an N95. A surgical mask does not filter it, and wipes are not the route.'},
+ {n:'TB',fr:'red',sc:'Cavitary lesion on the chest film, night sweats, weight loss.',res:'room air',air:1,req:{room:{'AIIR':'B'},mask:{'N95':'B'}},why:'Airborne: AIIR plus N95. Surface viability is not a fomite route.'},
+ {n:'Influenza',fr:'ok',sc:'Febrile adult in flu season, coughing on the ward.',res:'respiratory droplets',req:{mask:{'Surgical mask':'B','N95':'B'},hands:ALLH},why:'Droplet: a surgical mask is enough. N95 is not needed outside aerosol-generating procedures.'},
+ {n:'Norovirus',fr:'amber',sc:'Third patient on the unit with vomiting and diarrhea this week.',res:'vomit, stool',req:{surf:{'Bleach / sporicide':'B','Quat wipe':'L','Hospital wipe (List H)':'L','List P product':'L'},hands:{'Soap and water':'B','Alcohol rub':'L'}},why:'Outbreak: soap and water, and bleach or a List G product. Alcohol is less active.'},
+ {n:'C. diff',fr:'red',sc:'C. diff outbreak: hyperendemic unit, new case today.',res:'stool, surfaces',req:{surf:{'Bleach / sporicide':'B'},hands:{'Soap and water':'B','Alcohol rub':'H'}},why:'Spores: a sporicide (List K or 1:10 bleach) and soap and water in an outbreak. Alcohol is not sporicidal.'},
+ {n:'C. auris',fr:'red',sc:'Transfer from a long-term acute care hospital, screen positive.',res:'skin, surfaces',req:{surf:{'List P product':'B','Bleach / sporicide':'B','Quat wipe':'H','Hospital wipe (List H)':'H'},hands:ALLH},why:'List P product (List K as fallback). Quat-only wipes are unreliable. Alcohol rub works on hands.'},
+ {n:'MRSA',fr:'ok',sc:'Known MRSA colonization, admitted for cellulitis.',res:'skin, surfaces',req:{surf:{'Quat wipe':'B','Hospital wipe (List H)':'B','List P product':'B','Bleach / sporicide':'B'},hands:ALLH},why:'Routine tools work. MRSA spreads when a step is skipped.'},
+ {n:'Mpox',fr:'amber',sc:'Vesicular rash on the hands and genitals.',res:'lesions, linen',req:{surf:{'Bleach / sporicide':'B','Quat wipe':'L','Hospital wipe (List H)':'L','List P product':'L'},hands:ALLH,mask:{'N95':'B','Surgical mask':'L'}},why:'Lesions shed onto linen and surfaces. Hypochlorite and alcohol-based products worked in the lab; an H2O2 product did not. Confirm current CDC PPE guidance.'},
+ {n:'Legionella',fr:'red',sc:'Two hospital-onset Legionnaires’ cases on one floor.',res:'plumbing',req:{room:{'Water program':'B'}},why:'It lives in the pipes. Only a building water-management program reaches it.'},
+ {n:'Klebsiella (CPE)',fr:'ok',sc:'KPC Klebsiella in the urine; a sink sits beside the bed.',res:'sink drains',req:{room:{'Water program':'B','Standard room':'L','AIIR':'L'},surf:{'Quat wipe':'B','Hospital wipe (List H)':'B','List P product':'B','Bleach / sporicide':'B'},hands:ALLH},why:'Contact precautions work on surfaces and hands, but drains reseed. Sink and drain management closes the loop.'},
+ {n:'Adenovirus',fr:'amber',sc:'Adenovirus pneumonia on a transplant ward.',res:'respiratory, surfaces',req:{surf:{'Bleach / sporicide':'B','Quat wipe':'L','Hospital wipe (List H)':'L','List P product':'L'},hands:{'Soap and water':'B','Alcohol rub':'L'},mask:{'Surgical mask':'B','N95':'B'}},why:'Droplet plus contact. A non-enveloped virus: chlorine works, quat-only and alcohol are weaker.'}];
+const GST={deck:[],i:0,score:0,lives:3,streak:0,busy:false,pick:{room:'Standard room',surf:'Quat wipe',hands:'Alcohol rub',mask:'None'},done:false,over:false,log:[]};
+let gRaf;
+const gBest=()=>{try{return+localStorage.getItem('atlas-best')||0}catch(e){return 0}};
+function gNew(){GST.deck=GAME.map((g,i)=>i).sort(()=>Math.random()-.5).slice(0,10);GST.i=0;GST.score=0;GST.lives=3;GST.streak=0;GST.done=false;GST.over=false;GST.log=[];gReset()}
+function gReset(){GST.pick={room:'Standard room',surf:'Quat wipe',hands:'Alcohol rub',mask:'None'};GST.done=false}
+V.game=()=>shell({eyebrow:'Game · Choose the precaution',title:'Precaution game',q:'Ten patients. Each starts with the routine kit: standard room, quat wipe, alcohol rub, no mask. Upgrade what the pathogen needs, then run the shift. Overkill costs points; a spread costs a life.',chip:'Game',chipc:'inter',narrow:true,
+  fig:`<div id="gbar" class="ctrls" style="justify-content:space-between"></div><div id="gbody"></div>`,
+  side:`<div><h3>Scoring</h3><ul><li>Stopped: +100, plus 20 per streak step</li><li>Leaked (product-dependent): +40, streak resets</li><li>Spread: 0 and lose a life</li><li>Overkill: −15 for an AIIR or N95 the pathogen does not need, −10 for an unneeded water program</li><li>Busy shift: one hand or surface step may be skipped at random; points ×1.5</li></ul></div>
+  <div><h3>Slices</h3><div class="key"><div><span class="sw" style="background:var(--good)"></span>Blocks</div><div><span class="sw" style="background:var(--warn)"></span>Leaks</div><div><span class="sw" style="background:var(--bad)"></span>Hole</div><div><span class="sw" style="border:1.5px dashed var(--faint)"></span>Not this route</div></div></div>
+  <div class="note">Routes are scored in parallel: every route the pathogen uses has to be covered. Teaching model, not a protocol; follow your institution's policy.</div>`,
+  src:'Sources: CDC Appendix A; Kociolek 2023; Lionakis 2024; Hall 2011; Meister 2023; Mendis 2015; Lo 2026; Kramer 2006.'});
+function gEval(g){const st={},lab={};GSL.forEach(([k])=>{const r=g.req[k];if(!r){st[k]='N';lab[k]='not this route';return}st[k]=r[GST.pick[k]]||'H';lab[k]=GST.pick[k]});
+  let skipped=null;if(GST.busy&&Math.random()<.3){const c=['surf','hands'].filter(k=>st[k]==='B');if(c.length){skipped=c[Math.floor(Math.random()*c.length)];st[skipped]='H';lab[skipped]='Skipped (busy shift)'}}
+  const v=Object.values(st);const out=v.includes('H')?'spread':v.includes('L')?'leak':'stop';
+  let pen=[];if(GST.pick.room==='AIIR'&&!g.air)pen.push(['AIIR not needed',-15]);if(GST.pick.mask==='N95'&&!(g.req.mask&&g.req.mask['N95']==='B'&&!g.req.mask['Surgical mask']))pen.push(['N95 not needed',-15]);
+  if(GST.pick.room==='Water program'&&!(g.req.room&&g.req.room['Water program']))pen.push(['Water program not needed',-10]);
+  if(g.n==='Mpox'&&GST.pick.mask==='N95')pen=pen.filter(p=>p[0]!=='N95 not needed');
+  return{st,lab,out,pen,skipped}}
+function gBar(){const b=document.getElementById('gbar');if(!b)return;const best=Math.max(gBest(),GST.score);
+  b.innerHTML=`<div style="display:flex;gap:18px;flex-wrap:wrap;font-family:var(--font-mono);font-size:13px"><span>SCORE <b style="color:var(--fg);font-size:18px">${GST.score}</b></span><span>PATIENT <b style="color:var(--fg)">${Math.min(GST.i+1,10)}/10</b></span><span>LIVES <b style="color:var(--bad);letter-spacing:2px">${'●'.repeat(GST.lives)}<span style="opacity:.25">${'●'.repeat(3-GST.lives)}</span></b></span><span>STREAK <b style="color:var(--fg)">${GST.streak}</b></span><span>BEST <b style="color:var(--fg)">${best}</b></span></div>
+  <label style="display:flex;gap:6px;align-items:center;font-size:14px;color:var(--muted)"><input type="checkbox" id="gbusy" ${GST.busy?'checked':''}> Busy shift ×1.5</label>`;
+  document.getElementById('gbusy').onchange=e=>{GST.busy=e.target.checked}}
+function gRender(){gBar();const body=document.getElementById('gbody');if(!body)return;
+  if(GST.over){const best=gBest();body.innerHTML=`<div class="panel" style="text-align:center;padding:28px"><div class="eyebrow">Shift over</div><div style="font-family:var(--font-display);font-size:52px;font-weight:700">${GST.score}</div><p class="q" style="margin:4px auto 14px">${GST.lives>0?'All ten patients handled.':'Out of lives.'} Best: ${best}</p>
+    <div style="text-align:left;max-width:560px;margin:0 auto 16px;display:flex;flex-direction:column;gap:4px">${GST.log.map(l=>`<div style="display:flex;justify-content:space-between;gap:10px;font-size:14px;border-bottom:1px solid var(--line);padding:4px 0"><span>${l[0]}</span><span style="color:${l[1]==='stop'?'var(--good)':l[1]==='leak'?'var(--warn)':'var(--bad)'}">${l[1]==='stop'?'Stopped':l[1]==='leak'?'Leaked':'Spread'} · ${l[2]>0?'+':''}${l[2]}</span></div>`).join('')}</div>
+    <button class="pill" id="gagain" aria-pressed="true">Play again</button></div>`;document.getElementById('gagain').onclick=()=>{gNew();gRender()};return}
+  const g=GAME[GST.deck[GST.i]];
+  body.innerHTML=`<div class="panel" style="margin-bottom:12px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center"><div><div class="lab">Patient ${GST.i+1}</div><div style="font-size:16px">${g.sc}</div></div><div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:${GST.done?FEARC[g.fr]:'var(--muted)'}">${GST.done?g.n:'Diagnosis?'}</div></div>
+  ${GSL.map(([k,lab,opts])=>`<div class="ctrls" style="margin-bottom:6px"><span class="lab" style="min-width:64px">${lab}</span>${opts.map(o=>`<button class="pill" data-gk="${k}" data-gv="${o}" aria-pressed="${GST.pick[k]===o}" ${GST.done?'disabled':''}>${o}</button>`).join('')}</div>`).join('')}
+  <svg id="gsvg" viewBox="0 0 680 220" role="img" aria-label="Barrier lane result" style="margin-top:6px"></svg>
+  <div id="gres"></div>
+  <div class="ctrls" style="margin-top:10px">${GST.done?`<button class="pill" id="gnext" aria-pressed="true">${GST.i>=9||GST.lives<=0?'See results':'Next patient'}</button>`:`<button class="pill" id="grun" aria-pressed="true">Run the shift</button>`}<button class="pill" id="grestart">Restart</button></div>`;
+  body.querySelectorAll('[data-gk]').forEach(b=>b.onclick=()=>{GST.pick[b.dataset.gk]=b.dataset.gv;gRender()});
+  document.getElementById('grestart').onclick=()=>{gNew();gRender()};
+  if(GST.done){document.getElementById('gnext').onclick=()=>{if(GST.i>=9||GST.lives<=0){GST.over=true;try{if(GST.score>gBest())localStorage.setItem('atlas-best',GST.score)}catch(e){}}else{GST.i++;gReset()}gRender()};gLane(GST.last,false);gResult(g,GST.last)}
+  else{gLane(null,false);document.getElementById('grun').onclick=()=>{const r=gEval(g);let pts=r.out==='stop'?100+20*GST.streak:r.out==='leak'?40:0;r.pen.forEach(p=>pts+=p[1]);if(GST.busy&&pts>0)pts=Math.round(pts*1.5);
+    if(r.out==='stop')GST.streak++;else GST.streak=0;if(r.out==='spread')GST.lives--;r.pts=pts;GST.score+=pts;GST.last=r;GST.done=true;GST.log.push([g.n,r.out,pts]);gRender();gLane(r,true)}}}
+function gLane(r,anim){const svg=document.getElementById('gsvg');if(!svg)return;const X=[190,300,410,520],NM=['Room','Surface','Hands','Mask'],K=['room','surf','hands','mask'];
+  let h=`<rect x="8" y="64" width="92" height="80" rx="8" fill="var(--surface2)" stroke="var(--line)"/><text class="tx" x="54" y="100" text-anchor="middle" font-size="14" font-weight="600">Reservoir</text><text class="tm" x="54" y="120" text-anchor="middle" font-size="11">${r?GAME[GST.deck[GST.i]].res:'?'}</text>
+  <rect x="580" y="64" width="92" height="80" rx="8" fill="var(--surface2)" stroke="var(--line)"/><text class="tx" x="626" y="100" text-anchor="middle" font-size="14" font-weight="600">Spread</text><text class="tm" x="626" y="120" text-anchor="middle" font-size="11">next host</text><line x1="100" y1="104" x2="580" y2="104" stroke="var(--line)" stroke-dasharray="3 4"/>`;
+  K.forEach((k,i)=>{const x=X[i]-13;const s=r?r.st[k]:'?';h+=`<text class="tm" x="${X[i]}" y="34" text-anchor="middle" font-size="12.5">${NM[i]}</text>`;
+    if(s==='B')h+=`<rect x="${x}" y="44" width="26" height="120" rx="6" fill="var(--good)" opacity=".85"/>`;
+    else if(s==='H')h+=`<rect x="${x}" y="44" width="26" height="44" rx="6" fill="var(--bad)" opacity=".85"/><rect x="${x}" y="120" width="26" height="44" rx="6" fill="var(--bad)" opacity=".85"/>`;
+    else if(s==='L')h+=`<rect x="${x}" y="44" width="26" height="54" rx="6" fill="var(--warn)" opacity=".85"/><rect x="${x}" y="110" width="26" height="54" rx="6" fill="var(--warn)" opacity=".85"/>`;
+    else if(s==='N')h+=`<rect x="${x}" y="44" width="26" height="120" rx="6" fill="none" stroke="var(--faint)" stroke-dasharray="2 3"/>`;
+    else h+=`<rect x="${x}" y="44" width="26" height="120" rx="6" fill="var(--surface2)" stroke="var(--line)"/><text class="tf" x="${X[i]}" y="109" text-anchor="middle" font-size="16">?</text>`;
+    h+=`<text class="tm" x="${X[i]}" y="186" text-anchor="middle" font-size="11.5">${r?r.lab[k]:GST.pick[k]}</text>`});
+  h+=`<circle id="gdot" cx="100" cy="104" r="9" fill="var(--bad)" stroke="var(--surface)" stroke-width="2"/>`;svg.innerHTML=h;if(!r)return;
+  const st=K.map(k=>r.st[k]);const lastB=st.lastIndexOf('B');const end=r.out==='spread'||r.out==='leak'&&lastB<0?600:X[Math.max(lastB,0)]-24;
+  const dot=document.getElementById('gdot');let x=100,rad=9;cancelAnimationFrame(gRaf);
+  if(!anim||matchMedia('(prefers-reduced-motion: reduce)').matches){st.forEach((s,i)=>{if(s==='L'&&X[i]<end)rad=Math.max(5,rad-2)});dot.setAttribute('cx',end);dot.setAttribute('r',rad);return}
+  (function step(){x+=5;st.forEach((s,i)=>{if(s==='L'&&Math.abs(x-X[i])<3)rad=Math.max(5,rad-2)});if(x>=end)x=end;dot.setAttribute('cx',x);dot.setAttribute('r',rad);if(x<end)gRaf=requestAnimationFrame(step)})()}
+function gResult(g,r){const el=document.getElementById('gres');const c=r.out==='stop'?'var(--good)':r.out==='leak'?'var(--warn)':'var(--bad)';
+  el.innerHTML=`<div class="cards2"><div class="panel"><div class="lab">Outcome</div><div style="font-weight:700;color:${c};font-size:17px">${r.out==='stop'?'Stopped':r.out==='leak'?'Leaked: reduced, not stopped':'Spread to the next host'} · ${r.pts>0?'+':''}${r.pts}</div>${r.skipped?`<div style="color:var(--bad);font-size:13.5px">Busy shift: the ${r.skipped==='surf'?'surface wipe':'hand hygiene'} step was skipped.</div>`:''}${r.pen.map(p=>`<div style="color:var(--muted);font-size:13.5px">${p[0]} ${p[1]}</div>`).join('')}</div>
+  <div class="panel"><div class="lab">Right kit</div><div style="font-size:14px">${g.why}</div></div></div>`}
+function gWire(){if(!GST.deck.length)gNew();gRender()}
+
+/* Home */
+const TABS=[['home','Home'],null,['orbit','Orbit'],['ppe','PPE'],['agents','Agents'],['views','Three views'],null,['game','Precaution game'],['sim','Barrier sim'],['shield','Shield'],['human','Human factor'],null,['rings','Precaution rings'],['route','Route × time'],['lasting','Lasting vs tough'],['failure','Failure map'],['rose','Rose']];
+const CARDS={final:[['orbit','Where routine practice misses','Tools as hubs, pathogens in resistance orbits. The original sketch, finished.'],['ppe','What your PPE protects you from','Gloves, masks, N95: which pathogens each one covers.'],['agents','What each agent kills','Alcohol, quats, bleach, peroxide against the resistance ladder.'],['views','Space, time, disinfectant, fear','Three orthographic views of one object, colored by what routine practice misses.']],
+inter:[['game','Precaution game','Ten patients, one kit each. Choose the precaution, keep your lives, track your score.'],['sim','Barrier simulator','Swiss-cheese lane with kit and skipped-step toggles.'],['shield','Barrier shield','The slices wrapped into rings; sectors sized by persistence.'],['human','Human multiplier','Slide compliance and watch the red blocks grow.']],
+old:[['rings','Precaution rings','Rings by precaution level, tails by persistence, numbered concerns.'],['route','Survival time by route','The first axis sketch: time against route.'],['lasting','Lasting vs tough','Persistence ranges grouped by resistance tier.'],['failure','Barrier failure map','Every barrier against every organism.'],['rose','Persistence rose','Nightingale-style rose. Superseded.']]};
+V.home=()=>`<section class="hero"><div><div class="eyebrow">Malevolent Microbes · Isolation precautions, Part 3</div><h1>Back to the <em>1850s</em>?</h1><p>What we cannot see on surfaces, in water and on hands can harm us or the next patient in the bed. These models show how long each pathogen lasts, how hard it is to kill, how far it travels, and where our routine tools miss.</p></div>
+<div class="ledger"><span>Organisms</span><b>16</b><span>Barriers</span><b>hand rub · wipe · mask · N95 · water</b><span>Pooled prior-occupant OR</span><b>2.14 (95% CI 1.65–2.77)</b><span>Reported compliance</span><b>~50%</b><span>From</span><b><a href="https://malevolentmicrobes-stack.github.io/cozy-arcade-app/" target="_blank" rel="noopener" style="color:var(--accent)">Malevolent Microbes ↗</a></b></div></section>
+<div class="wash" style="margin-top:0;margin-bottom:6px"><div><h2>Wash your hands.</h2><p>Every reservoir reaches the next patient through someone’s hands. For most organisms on these maps, the failure is the step that was skipped.</p></div><a class="pill" href="#orbit" style="background:var(--bg);color:var(--fg);text-decoration:none">Open the orbit</a></div>
+${QUANTUM()}
+${[['final','Final models','final','Final'],['inter','Interactive','inter','Interactive'],['old','Explored along the way','old','Explored']].map(([k,h,c,lab])=>`<div class="group"><h2>${h}</h2><div class="grid">${CARDS[k].map(([id,t,d])=>`<a class="card" href="#${id}"><div class="row"><h3>${t}</h3><span class="chip ${c}">${lab}</span></div><p>${d}</p></a>`).join('')}</div></div>`).join('')}
+`;
+
+/* ---------- router & theme ---------- */
+const tabs=document.getElementById('tabs');
+tabs.innerHTML=TABS.map(t=>t?`<a href="#${t[0]}" data-id="${t[0]}">${t[1]}</a>`:'<span class="sep" aria-hidden="true"></span>').join('');
+function route(){let id=(location.hash||'#home').slice(1);if(!V[id])id='home';
+  const m=document.getElementById('main');m.innerHTML=V[id]();window.scrollTo(0,0);
+  tabs.querySelectorAll('a').forEach(a=>{if(a.dataset.id===id){a.setAttribute('aria-current','page');a.scrollIntoView({block:'nearest',inline:'nearest'})}else a.removeAttribute('aria-current')});
+  wireHover(m);if(id==='sim')simWire();if(id==='shield')shWire();if(id==='human')humWire();if(id==='game')gWire()}
+addEventListener('hashchange',route);
+const root=document.documentElement,tb=document.getElementById('theme'),tl=document.getElementById('themeLab');
+const isDark=()=>root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+const syncLab=()=>{tl.textContent=isDark()?'Light':'Dark'};
+if(!root.dataset.theme)root.dataset.theme='dark';
+tb.onclick=()=>{const n=isDark()?'light':'dark';root.dataset.theme=n;try{localStorage.setItem('atlas-theme2',n)}catch(e){}syncLab()};
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change',syncLab);
+syncLab();route();
+</script>
+</body>
+</html>
